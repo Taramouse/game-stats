@@ -23,9 +23,10 @@
     </v-navigation-drawer>
 
     <v-toolbar fixed app>
-      <v-toolbar-side-icon @click.stop="sideNav = !sideNav" dark></v-toolbar-side-icon>
-      <v-toolbar-title v-text="title"></v-toolbar-title>
+      <v-toolbar-side-icon class="hidden-sm-and-up" @click.stop="sideNav = !sideNav" dark></v-toolbar-side-icon>
+      <v-toolbar-title>Game Stats</v-toolbar-title>
       <v-spacer></v-spacer>
+      <v-toolbar-items class="hidden-sm-and-down">
       <v-btn
         flat
         v-for="item in menuItems"
@@ -41,6 +42,7 @@
         <v-icon left dark>exit_to_app</v-icon>
         Logout
       </v-btn>
+      </v-toolbar-items>
     </v-toolbar>
     <v-content>
       <router-view></router-view>
@@ -66,9 +68,9 @@
         ]
         if (this.userIsAuthenticated) {
           menuItems = [
-            {icon: 'fiber_manual_record', title: 'Record Stats', link: '/home'},
-            {icon: 'assessment', title: 'View Stats', link: '/home'},
-            {icon: 'videogame_asset', title: 'Game Profiles', link: '/home'}
+            {icon: 'fiber_manual_record', title: 'Record Stats', link: '/'},
+            {icon: 'assessment', title: 'View Stats', link: '/'},
+            {icon: 'videogame_asset', title: 'Game Profiles', link: '/'}
           ]
         }
         return menuItems
