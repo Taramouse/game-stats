@@ -1,9 +1,46 @@
-<template>
-  <v-container fluid>
-    <v-slide-y-transition mode="out-in">
-      <v-layout column align-center>
-        Profiles
-      </v-layout>
-    </v-slide-y-transition>
-  </v-container>
+<<template>
+  <v-layout row wrap>
+    <v-flex sm12 md6 offset-md3>
+      <v-card class="grid">
+        <v-subheader>Manage Game Profiles</v-subheader>
+        <v-container grid-list-lg>
+          <v-layout row wrap>
+            <v-flex xs4 v-for="item in menuItems" :key="item.title">
+              <v-btn
+                block
+                large
+                :to="item.link">
+                <v-icon color="blue" large>{{ item.icon }}</v-icon>
+                <span class="hidden-sm-and-down ml-2">{{ item.title }}</span>
+              </v-btn>
+            </v-flex>
+          </v-layout>
+        </v-container>
+      </v-card>
+    </v-flex>
+  </v-layout>
 </template>
+
+<script>
+  export default {
+    data () {
+      return {
+        menuItems: [
+          {icon: 'create_new_folder', title: 'New Profile', link: '/new-profile', color: 'blue'},
+          {icon: 'cloud_download', title: 'Download Profile', link: '/download-profile', color: 'success'},
+          {icon: 'cloud_upload', title: 'Upload Profile', link: '/share-profile', color: 'success'},
+          {icon: 'edit', title: 'Edit Profile', link: '/edit-profile', color: 'blue'},
+          {icon: 'share', title: 'Share Profile', link: '/share-profile', color: 'blue'},
+          {icon: 'delete', title: 'Delete Profile', link: '/delete-profile', color: 'danger'}
+        ]
+      }
+    }
+  }
+
+</script>
+<<style scoped>
+  .menuItem {
+    font-size: 64px;
+  }
+</style>
+
