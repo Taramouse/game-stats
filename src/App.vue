@@ -6,8 +6,8 @@
       v-model="sideNav"
       app>
       <v-list>
+        <v-subheader>Menu</v-subheader>
         <v-list-tile
-          value="true"
           v-for="item in menuItems"
           :key="item.title"
           :to="item.link"
@@ -36,7 +36,7 @@
         {{ item.title }}
       </v-btn>
       <v-btn
-         v-if="userIsAuthenticated"
+        v-if="userIsAuthenticated"
         flat
         @click="onLogout">
         <v-icon left dark>exit_to_app</v-icon>
