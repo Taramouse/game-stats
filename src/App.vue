@@ -24,7 +24,9 @@
 
     <v-toolbar fixed app>
       <v-toolbar-side-icon class="hidden-sm-and-up" @click.stop="sideNav = !sideNav" dark></v-toolbar-side-icon>
-      <v-toolbar-title>Game Stats</v-toolbar-title>
+      <v-toolbar-title>
+        <router-link to="/" tag="span" style="cursor: pointer">Game Stats</router-link>
+      </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items class="hidden-sm-and-down">
       <v-btn
@@ -48,7 +50,7 @@
       <router-view></router-view>
     </v-content>
     <v-footer fixed app>
-      <span>&copy; Nicky Keyse 2018</span>
+      <span>Nicky Keyse 2018</span>
     </v-footer>
   </v-app>
 </template>
