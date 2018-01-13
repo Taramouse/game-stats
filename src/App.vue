@@ -68,8 +68,8 @@
         ]
         if (this.userIsAuthenticated) {
           menuItems = [
-            {icon: 'fiber_manual_record', title: 'Record Stats', link: '/'},
-            {icon: 'assessment', title: 'View Stats', link: '/'},
+            {icon: 'fiber_manual_record', title: 'Record Stats', link: '/record'},
+            {icon: 'assessment', title: 'View Stats', link: '/stats'},
             {icon: 'videogame_asset', title: 'Game Profiles', link: '/profiles'}
           ]
         }
