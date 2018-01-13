@@ -1,9 +1,9 @@
 <template>
-    <v-layout row wrap class="mt-2">
+    <v-layout row wrap>
       <v-flex sm12 md8 offset-md2>
         <v-card class="grid">
-          <v-subheader>Manage Game Profiles</v-subheader>
-          <v-container grid-list-lg class="black">
+
+          <v-container grid-list-lg class="grey darken-4">
             <v-layout row wrap>
               <v-flex xs4 v-for="item in menuItems" :key="item.title">
                 <!-- <v-btn
@@ -13,13 +13,18 @@
                   <v-icon color="blue" large>{{ item.icon }}</v-icon>
                   <span class="hidden-sm-and-down ml-2">{{ item.title }}</span>
                 </v-btn> -->
-                <v-layout justify-space-around align-center class="mb-1">
-                  <a v-ripple :href="item.link">
-                    <v-avatar tile size="8em">
-                      <v-icon :color="item.color" large>{{item.icon}}</v-icon>
-                    </v-avatar
-                  ></a>
+
+                <v-layout justify-space-around align-center>
+                    <a v-ripple :href="item.link">
+                      <v-avatar tile size="8em">
+                        <v-icon :color="item.color" x-large>{{item.icon}}</v-icon>
+                      </v-avatar>
+                    </a>
                 </v-layout>
+                <v-layout justify-space-around align-center class="mb-1">
+                    <span class="grey--text">{{item.title}}</span>
+                </v-layout>
+
               </v-flex>
             </v-layout>
           </v-container>
