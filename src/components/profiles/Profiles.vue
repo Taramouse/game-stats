@@ -1,6 +1,6 @@
 <template>
     <v-layout row wrap class="mt-2">
-      <v-flex sm12 md6 offset-md3>
+      <v-flex sm12 md8 offset-md2>
         <v-card class="grid">
           <v-subheader>Manage Game Profiles</v-subheader>
           <v-container grid-list-lg>
