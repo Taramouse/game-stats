@@ -34,14 +34,14 @@
           v-for="item in menuItems"
           :key="item.title"
           :to="item.link">
-          <v-icon left dark>{{ item.icon }}</v-icon>
+          <v-icon class="primary--text" left dark>{{ item.icon }}</v-icon>
           {{ item.title }}
         </v-btn>
         <v-btn
           v-if="userIsAuthenticated"
           flat
           @click="onLogout">
-          <v-icon left dark>exit_to_app</v-icon>
+          <v-icon class="primary--text" left dark>exit_to_app</v-icon>
           Logout
         </v-btn>
       </v-toolbar-items>
@@ -65,14 +65,14 @@
     computed: {
       menuItems () {
         let menuItems = [
-          {icon: 'face', title: 'Sign up', link: '/signup'},
-          {icon: 'lock_open', title: 'Sign in', link: '/signin'}
+          {icon: 'face', title: 'Sign up', link: '/signup', color: 'info'},
+          {icon: 'lock_open', title: 'Sign in', link: '/signin', color: 'info'}
         ]
         if (this.userIsAuthenticated) {
           menuItems = [
-            {icon: 'fiber_manual_record', title: 'Record Stats', link: '/record'},
-            {icon: 'assessment', title: 'View Stats', link: '/stats'},
-            {icon: 'videogame_asset', title: 'Game Profiles', link: '/profiles'}
+            {icon: 'fiber_manual_record', title: 'Record Stats', link: '/record', color: 'error'},
+            {icon: 'remove_red_eye', title: 'View Stats', link: '/stats', color: 'info'},
+            {icon: 'videogame_asset', title: 'Game Profiles', link: '/profiles', color: 'info'}
           ]
         }
         return menuItems
