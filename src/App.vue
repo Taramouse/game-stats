@@ -72,7 +72,7 @@
           menuItems = [
             {icon: 'fiber_manual_record', title: 'Record Stats', link: '/record', color: 'error'},
             {icon: 'remove_red_eye', title: 'View Stats', link: '/stats', color: 'info'},
-            {icon: 'videogame_asset', title: 'Game Profiles', link: '/profiles', color: 'info'}
+            {icon: 'build', title: 'Game Profiles', link: '/profiles', color: 'info'}
           ]
         }
         return menuItems
