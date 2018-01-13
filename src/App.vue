@@ -34,7 +34,7 @@
           v-for="item in menuItems"
           :key="item.title"
           :to="item.link">
-          <v-icon class="primary--text" left dark>{{ item.icon }}</v-icon>
+          <v-icon :color="item.color" left dark>{{ item.icon }}</v-icon>
           {{ item.title }}
         </v-btn>
         <v-btn
