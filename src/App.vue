@@ -29,21 +29,21 @@
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items class="hidden-sm-and-down">
-      <v-btn
-        flat
-        v-for="item in menuItems"
-        :key="item.title"
-        :to="item.link">
-        <v-icon left dark>{{ item.icon }}</v-icon>
-        {{ item.title }}
-      </v-btn>
-      <v-btn
-        v-if="userIsAuthenticated"
-        flat
-        @click="onLogout">
-        <v-icon left dark>exit_to_app</v-icon>
-        Logout
-      </v-btn>
+        <v-btn
+          flat
+          v-for="item in menuItems"
+          :key="item.title"
+          :to="item.link">
+          <v-icon left dark>{{ item.icon }}</v-icon>
+          {{ item.title }}
+        </v-btn>
+        <v-btn
+          v-if="userIsAuthenticated"
+          flat
+          @click="onLogout">
+          <v-icon left dark>exit_to_app</v-icon>
+          Logout
+        </v-btn>
       </v-toolbar-items>
     </v-toolbar>
     <v-content class="grad-background">
