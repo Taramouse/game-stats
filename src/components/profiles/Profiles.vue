@@ -3,7 +3,7 @@
       <v-flex sm12 md8 offset-md2>
         <v-card class="grid">
           <v-subheader>Manage Game Profiles</v-subheader>
-          <v-container grid-list-lg>
+          <v-container grid-list-lg class="black">
             <v-layout row wrap>
               <v-flex xs4 v-for="item in menuItems" :key="item.title">
                 <!-- <v-btn
@@ -14,12 +14,11 @@
                   <span class="hidden-sm-and-down ml-2">{{ item.title }}</span>
                 </v-btn> -->
                 <v-layout justify-space-around align-center class="mb-1">
-                    <a v-ripple :href="item.link">
-                      <v-avatar tile
-                        size="8em"
-                        :class="item.color">
-                        <v-icon dark large>{{item.icon}}</v-icon>
-                      </v-avatar></a>
+                  <a v-ripple :href="item.link">
+                    <v-avatar tile size="8em">
+                      <v-icon :color="item.color" large>{{item.icon}}</v-icon>
+                    </v-avatar
+                  ></a>
                 </v-layout>
               </v-flex>
             </v-layout>
@@ -48,5 +47,8 @@
 </script>
 
 <style scoped>
+a {
+  text-decoration: none;
+}
 
 </style>
