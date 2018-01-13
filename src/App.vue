@@ -23,7 +23,7 @@
     </v-navigation-drawer>
 
     <v-toolbar fixed app>
-      <v-toolbar-side-icon class="hidden-sm-and-up" @click.stop="sideNav = !sideNav" dark></v-toolbar-side-icon>
+      <v-toolbar-side-icon class="hidden-md-and-up" @click.stop="sideNav = !sideNav" dark></v-toolbar-side-icon>
       <v-toolbar-title>
         <router-link to="/" tag="span" style="cursor: pointer">Game Stats</router-link>
       </v-toolbar-title>
