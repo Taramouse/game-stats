@@ -15,7 +15,7 @@
                 </v-btn> -->
 
                 <v-layout justify-space-around align-center>
-                    <a v-ripple :href="item.link">
+                    <a v-ripple @click="onNavigate(item.link)">
                       <v-avatar tile size="8em">
                         <v-icon :color="item.color" x-large>{{item.icon}}</v-icon>
                       </v-avatar>
@@ -46,14 +46,19 @@
           {icon: 'delete', title: 'Delete Profile', link: '/delete-profile', color: 'error'}
         ]
       }
+    },
+    methods: {
+      onNavigate (link) {
+        this.$router.push(link)
+      }
     }
   }
 
 </script>
 
 <style scoped>
-a {
-  text-decoration: none;
-}
+  a {
+    text-decoration: none;
+  }
 
 </style>

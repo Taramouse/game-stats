@@ -6,7 +6,13 @@ import Signup from '@/components/user/Signup'
 import Signin from '@/components/user/Signin'
 import Record from '@/components/record/Record'
 import Stats from '@/components/stats/Stats'
-import Profiles from '@/components/profiles/profiles.vue'
+import Profiles from '@/components/profiles/Profiles'
+import NewProfile from '@/components/profiles/NewProfile'
+import DeleteProfile from '@/components/profiles/DeleteProfile'
+import DownloadProfile from '@/components/profiles/DownloadProfile'
+import EditProfile from '@/components/profiles/EditProfile'
+import ShareProfile from '@/components/profiles/ShareProfile'
+import UploadProfile from '@/components/profiles/UploadProfile'
 
 Vue.use(Router)
 
@@ -43,6 +49,42 @@ export default new Router({
       path: '/profiles',
       name: 'Profiles',
       component: Profiles,
+      beforeEnter: AuthGuard
+    },
+    {
+      path: '/new-profile',
+      name: 'NewProfile',
+      component: NewProfile,
+      beforeEnter: AuthGuard
+    },
+    {
+      path: '/delete-profile',
+      name: 'DeleteProfile',
+      component: DeleteProfile,
+      beforeEnter: AuthGuard
+    },
+    {
+      path: '/download-profile',
+      name: 'DownloadProfile',
+      component: DownloadProfile,
+      beforeEnter: AuthGuard
+    },
+    {
+      path: '/edit-profile',
+      name: 'EditProfile',
+      component: EditProfile,
+      beforeEnter: AuthGuard
+    },
+    {
+      path: '/share-profile',
+      name: 'ShareProfile',
+      component: ShareProfile,
+      beforeEnter: AuthGuard
+    },
+    {
+      path: '/upload-profile',
+      name: 'UploadProfile',
+      component: UploadProfile,
       beforeEnter: AuthGuard
     }
   ]
