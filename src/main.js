@@ -10,11 +10,13 @@ import router from './router'
 import { store } from './store'
 
 import AlertCmp from './components/Shared/Alert.vue'
+import ProfileEditor from './components/profiles/edit/ProfileEditor.vue'
 
 Vue.use(Vuetify)
 Vue.config.productionTip = false
 
 Vue.component('app-alert', AlertCmp)
+Vue.component('app-profile-editor', ProfileEditor)
 
 /* eslint-disable no-new */
 new Vue({
