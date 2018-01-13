@@ -46,7 +46,7 @@
       </v-btn>
       </v-toolbar-items>
     </v-toolbar>
-    <v-content>
+    <v-content class="grad-background">
       <router-view></router-view>
     </v-content>
     <v-footer fixed app>
@@ -88,3 +88,12 @@
     }
   }
 </script>
+
+<<style scoped>
+  .grad-background {
+    background: #6441a5; /* fallback for old browsers */
+    background: -webkit-linear-gradient(to top, #6441a5, #2a0845); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to top, #6441a5, #2a0845); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  }
+</style>
+
