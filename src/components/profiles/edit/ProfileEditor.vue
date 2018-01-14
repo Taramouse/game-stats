@@ -2,7 +2,7 @@
 
         <v-card class="card--flex-toolbar">
           <v-toolbar card dark>
-            <v-toolbar-title class="hidden-xs-only">Profile Editor</v-toolbar-title>
+            <v-toolbar-title>Profile Editor</v-toolbar-title>
             <v-spacer></v-spacer>
               <v-toolbar-items>
               <v-btn flat @click="addStat">
@@ -23,7 +23,7 @@
             <v-card-text>
                 <v-layout row>
                   <v-flex>
-                    <div class="editArea pa-2">
+                    <div class="editArea pa-4 black">
                       <v-text-field
                         label="Profile Name"
                         v-model="profileName"
