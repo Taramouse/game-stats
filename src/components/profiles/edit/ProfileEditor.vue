@@ -9,7 +9,7 @@
                 <v-icon left>add</v-icon>
                 <span class="hidden-sm-and-down">Add Stat</span>
               </v-btn>
-              <v-btn flat>
+              <v-btn flat @click="onCreateProfile">
                 <v-icon left>cloud_upload</v-icon>
                 <span class="hidden-sm-and-down">Save</span>
               </v-btn>
@@ -28,6 +28,10 @@
                         label="Profile Name"
                         v-model="profileName"
                       ></v-text-field>
+                      <v-text-field
+                        label="Profile Description"
+                        v-model="profileDescription"
+                      ></v-text-field>
 
                       <draggable
                         v-model="profileItems"
@@ -35,7 +39,7 @@
                         @start="drag=true"
                         @end="drag=false">
                         <transition-group>
-                          <div v-for="item in profileItems" :key="item.id">
+                          <div v-for="item in profileItems" :key="item.title">
                             <v-chip close light @input="remove(item)">{{item.title}}</v-chip>
                           </div>
                         </transition-group>
@@ -55,22 +59,31 @@
     data () {
       return {
         profileName: 'Real Racing 3',
+        profileDescription: 'For logging loads of Real Racing 3 stats.',
         profileItems: [
-          { id: '0', title: 'Fastest Lap' },
-          { id: '1', title: 'Race Time' },
-          { id: '2', title: 'Circuit' },
-          { id: '3', title: 'Car Manufacturer' },
-          { id: '4', title: 'Car Model' }
+          { title: 'Fastest Lap' },
+          { title: 'Race Time' },
+          { title: 'Circuit' },
+          { title: 'Car Manufacturer' },
+          { title: 'Car Model' }
         ]
       }
     },
     methods: {
       addStat () {
-        this.profileItems.push({id: '5', title: 'New Stat Added!'})
+        this.profileItems.push({title: 'New Stat Added!'})
       },
       remove (item) {
         this.profileItems.splice(this.profileItems.indexOf(item), 1)
         this.profileItems = [...this.profileItems]
+      },
+      onCreateProfile () {
+        const profileData = {
+          profileName: this.profileName,
+          profileDescription: this.profileDescription,
+          profileItems: this.profileItems
+        }
+        this.$store.dispatch('createProfile', profileData)
       }
     }
   }
