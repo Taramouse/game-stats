@@ -1,10 +1,9 @@
 <template>
   <v-container fluid>
-      <v-layout column align-center>
-        <div class="text-xs-center">
-          <h2>Profile Editor</h2>
+      <v-layout>
+        <v-flex sm12 >
           <app-profile-editor></app-profile-editor>
-        </div>
+        </v-flex>
       </v-layout>
   </v-container>
 </template>

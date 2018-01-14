@@ -1,25 +1,59 @@
 <template>
-  <v-container fluid>
-      <v-layout column>
-        <div class="text-xs-center">
-          <h1>{{profileTitle}}</h1>
-        </div>
-      </v-layout>
-      <v-layout row>
-          <v-flex xs12 md8>
-            <div class="editArea mt-2">
+  <v-container>
+    <v-layout row>
+      <v-flex>
+        <v-card class="card--flex-toolbar">
 
-              <draggable v-model="profileItems" @start="drag=true" @end="drag=false">
-                <transition-group>
-                  <div v-for="item in profileItems" :key="item.id">
-                  <v-chip v-model="item.id" close light @input="remove(data.item)">{{item.title}}</v-chip>
-                  </div>
-                </transition-group>
-              </draggable>
+          <v-toolbar card dark>
+            <v-toolbar-title>Profile Editor</v-toolbar-title>
+            <v-spacer></v-spacer>
+              <v-toolbar-items>
+              <v-btn flat>
+                <v-icon left>add</v-icon>
+                Add Stat
+              </v-btn>
+              <v-btn flat>
+                <v-icon left>cloud_upload</v-icon>
+                Save
+              </v-btn>
+              <v-btn flat>
+                <v-icon left>remove_red_eye</v-icon>
+                Preview
+              </v-btn>
+            </v-toolbar-items>
+          </v-toolbar>
 
-            </div>
-          </v-flex>
-      </v-layout>
+            <v-card-text>
+                <v-layout row>
+                  <v-flex>
+                    <div class="editArea pa-2">
+                      <v-text-field
+                        label="New Profile Name"
+                        v-model="profileName"
+                      ></v-text-field>
+
+                      <draggable
+                        v-model="profileItems"
+                        :options="{group:'stats'}"
+                        @start="drag=true"
+                        @end="drag=false">
+                        <transition-group>
+                          <div v-for="item in profileItems" :key="item.id">
+                            <v-chip close light @input="remove(item)">{{item.title}}</v-chip>
+                          </div>
+                        </transition-group>
+                      </draggable>
+
+                    </div>
+                  </v-flex>
+              </v-layout>
+            </v-card-text>
+
+        </v-card>
+      </v-flex>
+    </v-layout>
+
+
   </v-container>
 </template>
 
@@ -27,7 +61,7 @@
   export default {
     data () {
       return {
-        profileTitle: 'Real Racing 3',
+        profileName: 'Real Racing 3',
         profileItems: [
           { id: '7ghu8', title: 'Fastest Lap' },
           { id: '1tg7j', title: 'Race Time' },
@@ -35,6 +69,12 @@
           { id: '3xtuk', title: 'Car Manufacturer' },
           { id: '4r7hn', title: 'Car Model' }
         ]
+      }
+    },
+    methods: {
+      remove (item) {
+        this.profileItems.splice(this.profileItems.indexOf(item), 1)
+        this.profileItems = [...this.profileItems]
       }
     }
   }
