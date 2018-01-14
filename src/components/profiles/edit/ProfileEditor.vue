@@ -1,24 +1,21 @@
 <template>
-  <v-container>
-    <v-layout row>
-      <v-flex>
-        <v-card class="card--flex-toolbar">
 
+        <v-card class="card--flex-toolbar">
           <v-toolbar card dark>
-            <v-toolbar-title>Profile Editor</v-toolbar-title>
+            <v-toolbar-title class="hidden-xs-only">Profile Editor</v-toolbar-title>
             <v-spacer></v-spacer>
               <v-toolbar-items>
-              <v-btn flat>
+              <v-btn flat @click="addStat">
                 <v-icon left>add</v-icon>
-                Add Stat
+                <span class="hidden-sm-and-down">Add Stat</span>
               </v-btn>
               <v-btn flat>
                 <v-icon left>cloud_upload</v-icon>
-                Save
+                <span class="hidden-sm-and-down">Save</span>
               </v-btn>
               <v-btn flat>
                 <v-icon left>remove_red_eye</v-icon>
-                Preview
+                <span class="hidden-sm-and-down">Preview</span>
               </v-btn>
             </v-toolbar-items>
           </v-toolbar>
@@ -28,7 +25,7 @@
                   <v-flex>
                     <div class="editArea pa-2">
                       <v-text-field
-                        label="New Profile Name"
+                        label="Profile Name"
                         v-model="profileName"
                       ></v-text-field>
 
@@ -50,11 +47,7 @@
             </v-card-text>
 
         </v-card>
-      </v-flex>
-    </v-layout>
 
-
-  </v-container>
 </template>
 
 <<script>
@@ -63,15 +56,18 @@
       return {
         profileName: 'Real Racing 3',
         profileItems: [
-          { id: '7ghu8', title: 'Fastest Lap' },
-          { id: '1tg7j', title: 'Race Time' },
-          { id: '2rr6j', title: 'Circuit' },
-          { id: '3xtuk', title: 'Car Manufacturer' },
-          { id: '4r7hn', title: 'Car Model' }
+          { id: '0', title: 'Fastest Lap' },
+          { id: '1', title: 'Race Time' },
+          { id: '2', title: 'Circuit' },
+          { id: '3', title: 'Car Manufacturer' },
+          { id: '4', title: 'Car Model' }
         ]
       }
     },
     methods: {
+      addStat () {
+        this.profileItems.push({id: '5', title: 'New Stat Added!'})
+      },
       remove (item) {
         this.profileItems.splice(this.profileItems.indexOf(item), 1)
         this.profileItems = [...this.profileItems]
