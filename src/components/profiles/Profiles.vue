@@ -6,13 +6,6 @@
           <v-container grid-list-lg class="grey darken-4">
             <v-layout row wrap>
               <v-flex xs4 v-for="item in menuItems" :key="item.title">
-                <!-- <v-btn
-                  block
-                  large
-                  :to="item.link">
-                  <v-icon color="blue" large>{{ item.icon }}</v-icon>
-                  <span class="hidden-sm-and-down ml-2">{{ item.title }}</span>
-                </v-btn> -->
 
                 <v-layout justify-space-around align-center>
                     <router-link v-ripple :to="item.link" tag="a">
