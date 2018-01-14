@@ -19,7 +19,6 @@ export default {
             commit('setLoading', false)
             const newUser = {
               id: user.uid,
-              registeredMeetups: [],
               fbKeys: {}
             }
             commit('setUser', newUser)
@@ -41,7 +40,6 @@ export default {
             commit('setLoading', false)
             const newUser = {
               id: user.uid,
-              registeredMeetups: [],
               fbKeys: {}
             }
             commit('setUser', newUser)
@@ -66,7 +64,6 @@ export default {
             token: result.credential.accessToken,
             secret: result.credential.secret,
             user: result.user,
-            registeredMeetups: [],
             fbKeys: {}
           }
           commit('setUser', newUser)
@@ -82,7 +79,6 @@ export default {
     autoSignIn ({commit}, payload) {
       commit('setUser', {
         id: payload.uid,
-        registeredMeetups: [],
         fbKeys: {}
       })
     },
