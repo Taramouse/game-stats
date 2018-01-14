@@ -1,11 +1,11 @@
 <template>
 
-        <v-card class="card--flex-toolbar">
+        <v-card class="card--flex-toolbar mb-2">
           <v-toolbar card dark>
             <v-toolbar-title>Profile Editor</v-toolbar-title>
             <v-spacer></v-spacer>
               <v-toolbar-items>
-              <v-btn flat @click="addStat">
+              <v-btn flat @click="editDialogue = true">
                 <v-icon left>add</v-icon>
                 <span class="hidden-sm-and-down">Add Stat</span>
               </v-btn>
@@ -23,7 +23,7 @@
             <v-card-text>
                 <v-layout row>
                   <v-flex>
-                    <div class="editArea pa-4 black">
+                    <div class="editArea pa-4">
                       <v-text-field
                         label="Profile Name"
                         v-model="profileName"
@@ -47,11 +47,45 @@
 
                     </div>
                   </v-flex>
-              </v-layout>
-            </v-card-text>
+                </v-layout>
+              </v-card-text>
+
+      <v-dialog width="350px" persistent v-model="editDialogue">
+      <v-card>
+        <v-container>
+          <v-layout row wrap>
+            <v-flex xs12>
+              <v-card-title>Enter Stat Name</v-card-title>
+            </v-flex>
+          </v-layout>
+          <v-divider></v-divider>
+          <v-layout row wrap>
+            <v-flex xs12>
+              <v-card-text>
+                <v-text-field
+                  name="name"
+                  label="Name"
+                  id="name"
+                  v-model="addedName"
+                  required></v-text-field>
+              </v-card-text>
+            </v-flex>
+          </v-layout>
+          <v-divider></v-divider>
+          <v-layout row wrap>
+            <v-flex xs12>
+              <v-card-actions>
+                <v-btn flat class="error--text" @click="onDiscard">Discard</v-btn>
+                <v-btn flat class="info--text" @click="onSaveChanges">Add Stat</v-btn>
+              </v-card-actions>
+            </v-flex>
+          </v-layout>
+        </v-container>
+      </v-card>
+    </v-dialog>
+
 
         </v-card>
-
 </template>
 
 <<script>
@@ -66,7 +100,9 @@
           { title: 'Circuit' },
           { title: 'Car Manufacturer' },
           { title: 'Car Model' }
-        ]
+        ],
+        addedName: '',
+        editDialogue: false
       }
     },
     methods: {
@@ -84,6 +120,23 @@
           profileItems: this.profileItems
         }
         this.$store.dispatch('createProfile', profileData)
+      },
+      onDiscard () {
+        this.editDialogue = false
+      },
+      onSaveChanges () {
+        if (this.addedName.trim() === '') {
+          return
+        }
+
+        this.editDialogue = false
+        // ToDo These names must be unique - need validation
+        this.profileItems.push({title: this.addedName})
+        // this.$store.dispatch('updateMeetupData', {
+        //   id: this.meetup.id,
+        //   title: this.editedTitle,
+        //   description: this.editedDescription
+        // })
       }
     }
   }
