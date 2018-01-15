@@ -92,15 +92,6 @@
   export default {
     data () {
       return {
-        profileName: 'Real Racing 3',
-        profileDescription: 'For logging loads of Real Racing 3 stats.',
-        profileItems: [
-          { title: 'Fastest Lap' },
-          { title: 'Race Time' },
-          { title: 'Circuit' },
-          { title: 'Car Manufacturer' },
-          { title: 'Car Model' }
-        ],
         addedName: '',
         editDialogue: false
       }
