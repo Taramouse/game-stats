@@ -4,17 +4,21 @@ import Vue from 'vue'
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.css'
 import * as firebase from 'firebase'
+import draggable from 'vuedraggable'
 
 import App from './App'
 import router from './router'
 import { store } from './store'
 
 import AlertCmp from './components/Shared/Alert.vue'
+import ProfileEditor from './components/profiles/edit/ProfileEditor.vue'
 
 Vue.use(Vuetify)
 Vue.config.productionTip = false
 
 Vue.component('app-alert', AlertCmp)
+Vue.component('app-profile-editor', ProfileEditor)
+Vue.component('draggable', draggable)
 
 /* eslint-disable no-new */
 new Vue({

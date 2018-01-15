@@ -6,20 +6,13 @@
           <v-container grid-list-lg class="grey darken-4">
             <v-layout row wrap>
               <v-flex xs4 v-for="item in menuItems" :key="item.title">
-                <!-- <v-btn
-                  block
-                  large
-                  :to="item.link">
-                  <v-icon color="blue" large>{{ item.icon }}</v-icon>
-                  <span class="hidden-sm-and-down ml-2">{{ item.title }}</span>
-                </v-btn> -->
 
                 <v-layout justify-space-around align-center>
-                    <a v-ripple @click="onNavigate(item.link)">
+                    <router-link v-ripple :to="item.link" tag="a">
                       <v-avatar tile size="8em">
                         <v-icon :color="item.color" x-large>{{item.icon}}</v-icon>
                       </v-avatar>
-                    </a>
+                    </router-link>
                 </v-layout>
                 <v-layout justify-space-around align-center class="mb-1">
                     <span class="grey--text">{{item.title}}</span>
@@ -59,6 +52,7 @@
 <style scoped>
   a {
     text-decoration: none;
+    cursor: pointer;
   }
 
 </style>
