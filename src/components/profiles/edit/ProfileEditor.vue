@@ -66,8 +66,8 @@
                   name="name"
                   label="Name"
                   id="name"
-                  v-model="addedName"
-                  required></v-text-field>
+                  v-model="statName"
+                  required unique></v-text-field>
               </v-card-text>
             </v-flex>
           </v-layout>
@@ -92,7 +92,10 @@
   export default {
     data () {
       return {
-        addedName: '',
+        profileName: '',
+        profileDescription: '',
+        profileItems: [],
+        statName: '',
         editDialogue: false
       }
     },
@@ -116,13 +119,13 @@
         this.editDialogue = false
       },
       onSaveChanges () {
-        if (this.addedName.trim() === '') {
+        if (this.statName.trim() === '') {
           return
         }
 
         this.editDialogue = false
         // ToDo These names must be unique - need validation
-        this.profileItems.push({title: this.addedName})
+        this.profileItems.push({title: this.statName})
         // this.$store.dispatch('updateMeetupData', {
         //   id: this.meetup.id,
         //   title: this.editedTitle,
