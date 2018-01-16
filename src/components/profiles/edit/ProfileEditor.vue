@@ -1,6 +1,12 @@
 <template>
-
+  <div>
+    <v-layout row v-if="error">
+      <v-flex xs12 sm6 offset-sm3>
+        <app-alert @dismissed="onDismissed" :text="error.message"></app-alert>
+      </v-flex>
+     </v-layout>
         <v-card class="card--flex-toolbar mb-2">
+          <v-form v-model="valid" ref="form" lazy-validation @submit.prevent="onCreateProfile">
           <v-toolbar card dark>
             <v-toolbar-title>Profile Editor</v-toolbar-title>
             <v-spacer></v-spacer>
@@ -9,7 +15,7 @@
                 <v-icon left>add</v-icon>
                 <span class="hidden-sm-and-down">Add Stat</span>
               </v-btn>
-              <v-btn flat @click="onCreateProfile">
+              <v-btn flat type="submit" :disabled="loading || !valid" :loading="loading">
                 <v-icon left>cloud_upload</v-icon>
                 <span class="hidden-sm-and-down">Save</span>
               </v-btn>
@@ -27,10 +33,16 @@
                       <v-text-field
                         label="Profile Name"
                         v-model="profileName"
+                        :rules="nameRules"
+                        :counter="5"
+                        required
                       ></v-text-field>
                       <v-text-field
                         label="Profile Description"
                         v-model="profileDescription"
+                        :rules="descriptionRules"
+                        :counter="10"
+                        required
                       ></v-text-field>
 
                       <draggable
@@ -49,8 +61,8 @@
                   </v-flex>
                 </v-layout>
               </v-card-text>
-
-      <v-dialog width="350px" persistent v-model="editDialogue">
+          </v-form>
+    <v-dialog width="350px" persistent v-model="editDialogue">
       <v-card>
         <v-container>
           <v-layout row wrap>
@@ -84,8 +96,8 @@
       </v-card>
     </v-dialog>
 
-
-        </v-card>
+    </v-card>
+  </div>
 </template>
 
 <<script>
@@ -96,7 +108,24 @@
         profileDescription: '',
         profileItems: [],
         statName: '',
-        editDialogue: false
+        editDialogue: false,
+        valid: false,
+        nameRules: [
+          (v) => !!v || 'Name is required',
+          (v) => v.length >= 5 || 'Name must be more than 3 characters'
+        ],
+        descriptionRules: [
+          (v) => !!v || 'Description is required',
+          (v) => v.length >= 10 || 'Descriptio must be more than 10 characters'
+        ]
+      }
+    },
+    computed: {
+      error () {
+        return this.$store.getters.error
+      },
+      loading () {
+        return this.$store.getters.loading
       }
     },
     methods: {
@@ -108,12 +137,14 @@
         this.profileItems = [...this.profileItems]
       },
       onCreateProfile () {
-        const profileData = {
-          profileName: this.profileName,
-          profileDescription: this.profileDescription,
-          profileItems: this.profileItems
+        if (this.$refs.form.validate()) {
+          const profileData = {
+            profileName: this.profileName,
+            profileDescription: this.profileDescription,
+            profileItems: this.profileItems
+          }
+          this.$store.dispatch('createProfile', profileData)
         }
-        this.$store.dispatch('createProfile', profileData)
       },
       onDiscard () {
         this.editDialogue = false
@@ -131,6 +162,15 @@
         //   title: this.editedTitle,
         //   description: this.editedDescription
         // })
+      },
+      error () {
+        return this.$store.getters.error
+      },
+      onDismissed () {
+        this.$store.dispatch('clearError')
+      },
+      loading () {
+        return this.$store.getters.loading
       }
     }
   }

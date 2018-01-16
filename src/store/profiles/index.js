@@ -19,6 +19,7 @@ export default {
   },
   actions: {
     createProfile ({ commit, getters }, payload) {
+      commit('setLoading', true)
       const profile = {
         profileName: payload.profileName,
         profileItems: payload.profileItems,
@@ -28,11 +29,14 @@ export default {
       }
       firebase.database().ref('game-profiles').child(payload.profileName).push(profile)
         .then(() => {
+          commit('setLoading', false)
           commit('createProfile', {
             ...profile
           })
         })
         .catch((error) => {
+          commit('setLoading', false)
+          commit('setError', error)
           console.log(error)
         })
     }
@@ -40,7 +44,7 @@ export default {
   getters: {
     loadedProfile (state) {
       return (profileId) => {
-        return state.loadedMeetups.find((profile) => {
+        return state.loadedProfile.find((profile) => {
           return profile.id === profileId
         })
       }
