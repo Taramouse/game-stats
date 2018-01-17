@@ -5,8 +5,9 @@
         <app-alert @dismissed="onDismissed" :text="error.message"></app-alert>
       </v-flex>
      </v-layout>
-        <v-card class="card--flex-toolbar mb-2">
-          <v-form v-model="valid" ref="form" lazy-validation @submit.prevent="onCreateProfile">
+     <v-card class="card--flex-toolbar mb-2">
+        <v-form v-model="valid" ref="form" lazy-validation @submit.prevent="onCreateProfile">
+
           <v-toolbar card dark>
             <v-toolbar-title>Profile Editor</v-toolbar-title>
             <v-spacer></v-spacer>
@@ -19,49 +20,75 @@
                 <v-icon left>cloud_upload</v-icon>
                 <span class="hidden-sm-and-down">Save</span>
               </v-btn>
-              <v-btn flat>
-                <v-icon left>remove_red_eye</v-icon>
+              <v-btn flat @click="preview = !preview">
+                <v-icon color="primary" left v-if="preview">remove_red_eye</v-icon>
+                <v-icon left v-if="!preview">remove_red_eye</v-icon>
                 <span class="hidden-sm-and-down">Preview</span>
               </v-btn>
             </v-toolbar-items>
           </v-toolbar>
 
-            <v-card-text>
-                <v-layout row>
-                  <v-flex>
-                    <div class="editArea pa-4">
-                      <v-text-field
-                        label="Profile Name"
-                        v-model="profileName"
-                        :rules="nameRules"
-                        :counter="5"
-                        required
-                      ></v-text-field>
-                      <v-text-field
-                        label="Profile Description"
-                        v-model="profileDescription"
-                        :rules="descriptionRules"
-                        :counter="10"
-                        required
-                      ></v-text-field>
+          <v-card-text>
+            <v-layout row>
+              <v-flex>
+                <div class="editArea pa-4">
+                <v-text-field
+                  label="Profile Name"
+                  v-model="profileName"
+                  :rules="nameRules"
+                  :counter="5"
+                  required
+                ></v-text-field>
+                <v-text-field
+                  label="Profile Description"
+                  v-model="profileDescription"
+                  :rules="descriptionRules"
+                  :counter="10"
+                  required
+                ></v-text-field>
+                <draggable
+                  v-model="profileItems"
+                  :options="{group:'stats'}"
+                  @start="drag=true"
+                  @end="drag=false">
+                <transition-group>
+                  <div v-for="item in profileItems" :key="item.text">
+                    <v-chip close light @input="remove(item)">{{item.text}}</v-chip>
+                  </div>
+                </transition-group>
+              </draggable>
+            </div>
+          </v-flex>
+        </v-layout>
+      </v-card-text>
+    </v-form>
+  </v-card>
+    <v-layout row v-if="preview">
+      <v-flex>
+        <v-card dark class="text-xs-center">
+          <h1>{{profileName}}</h1>
+          <h2>{{profileDescription}}</h2>
+          <v-divider></v-divider>
+          <v-data-table
+            v-bind:headers="profileItems"
+            :items="items"
+            hide-actions
+            class="elevation-1"
+            dark
+          >
+          <template slot="items" slot-scope="props">
+            <td>{{ <props class="item name"></props> }}</td>
+          </template>
+          <template slot="no-data">
+            <v-alert :value="true" color="success" icon="info">
+              Your recorded stats will display here.
+            </v-alert>
+          </template>
+        </v-data-table>
+      </v-card>
+    </v-flex>
+  </v-layout>
 
-                      <draggable
-                        v-model="profileItems"
-                        :options="{group:'stats'}"
-                        @start="drag=true"
-                        @end="drag=false">
-                        <transition-group>
-                          <div v-for="item in profileItems" :key="item.title">
-                            <v-chip close light @input="remove(item)">{{item.title}}</v-chip>
-                          </div>
-                        </transition-group>
-                      </draggable>
-
-                    </div>
-                  </v-flex>
-                </v-layout>
-              </v-card-text>
-          </v-form>
     <v-dialog width="350px" persistent v-model="editDialogue">
       <v-card>
         <v-container>
@@ -88,7 +115,7 @@
             <v-flex xs12>
               <v-card-actions>
                 <v-btn flat class="error--text" @click="onDiscard">Discard</v-btn>
-                <v-btn flat class="info--text" @click="onSaveChanges">Add Stat</v-btn>
+                <v-btn flat class="info--text" @click="onAddStat">Add Stat</v-btn>
               </v-card-actions>
             </v-flex>
           </v-layout>
@@ -96,7 +123,7 @@
       </v-card>
     </v-dialog>
 
-    </v-card>
+
   </div>
 </template>
 
@@ -108,6 +135,7 @@
         profileDescription: '',
         profileItems: [],
         statName: '',
+        items: [],
         editDialogue: false,
         valid: false,
         nameRules: [
@@ -117,7 +145,8 @@
         descriptionRules: [
           (v) => !!v || 'Description is required',
           (v) => v.length >= 10 || 'Descriptio must be more than 10 characters'
-        ]
+        ],
+        preview: false
       }
     },
     computed: {
@@ -129,9 +158,6 @@
       }
     },
     methods: {
-      addStat () {
-        this.profileItems.push({title: 'New Stat Added!'})
-      },
       remove (item) {
         this.profileItems.splice(this.profileItems.indexOf(item), 1)
         this.profileItems = [...this.profileItems]
@@ -149,14 +175,19 @@
       onDiscard () {
         this.editDialogue = false
       },
-      onSaveChanges () {
+      onAddStat () {
         if (this.statName.trim() === '') {
           return
         }
 
         this.editDialogue = false
         // ToDo These names must be unique - need validation
-        this.profileItems.push({title: this.statName})
+        this.profileItems.push({
+          text: this.statName,
+          align: 'center',
+          sortable: false,
+          value: 'name'
+        })
         // this.$store.dispatch('updateMeetupData', {
         //   id: this.meetup.id,
         //   title: this.editedTitle,

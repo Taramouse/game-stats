@@ -1,3 +1,4 @@
+/* eslint-disable no-dupe-keys */
 import * as firebase from 'firebase'
 
 export default {
@@ -5,11 +6,11 @@ export default {
     profileName: 'Real Racing 3',
     profileDescription: 'For logging loads of Real Racing 3 stats.',
     profileItems: [
-      { title: 'Fastest Lap' },
-      { title: 'Race Time' },
-      { title: 'Circuit' },
-      { title: 'Car Manufacturer' },
-      { title: 'Car Model' }
+      { title: 'Fastest Lap', align: 'center', sortable: false, value: 'name' },
+      { title: 'Race Time', value: 'name', align: 'center', sortable: false, value: 'name' },
+      { title: 'Circuit', value: 'name', align: 'center', sortable: false, value: 'name' },
+      { title: 'Car Manufacturer', value: 'name', align: 'center', sortable: false, value: 'name' },
+      { title: 'Car Model', value: 'name', align: 'center', sortable: false, value: 'name' }
     ]
   },
   mutations: {
@@ -39,6 +40,34 @@ export default {
           commit('setError', error)
           console.log(error)
         })
+    },
+    loadProfile ({commit}) {
+      commit('setLoading', true)
+      // replace once with on for realtime updates from firebase.
+      firebase.database().ref('game-profile').once('value')
+        .then((data) => {
+          const profiles = []
+          const obj = data.val()
+          for (let key in obj) {
+            profiles.push({
+              id: key,
+              profileName: obj[key].profileName,
+              prfileDescription: obj[key].profileDescription,
+              profileItems: obj[key].profileItems,
+              imageUrl: obj[key].imageUrl,
+              date: obj[key].date,
+              creatorId: obj[key].creatorId
+            })
+          }
+          commit('setLoadedProfiles', profiles)
+          commit('setLoading', false)
+        })
+        .catch(
+          (error) => {
+            console.log(error)
+            commit('setLoading', true)
+          }
+        )
     }
   },
   getters: {
