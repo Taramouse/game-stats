@@ -53,7 +53,7 @@
                   @end="drag=false">
                 <transition-group>
                   <div v-for="item in profileItems" :key="item.text">
-                    <v-chip close light @input="remove(item)">{{item.text}}</v-chip>
+                    <v-chip close light @input="removeStat(item)">{{item.text}}</v-chip>
                   </div>
                 </transition-group>
               </draggable>
@@ -98,32 +98,42 @@
             </v-flex>
           </v-layout>
           <v-divider></v-divider>
-          <v-layout row wrap>
-            <v-flex xs12>
-              <v-card-text>
-                <v-text-field
-                  name="name"
-                  label="Name"
-                  id="name"
-                  v-model="statName"
-                  required unique></v-text-field>
-              </v-card-text>
-            </v-flex>
-          </v-layout>
-          <v-divider></v-divider>
-          <v-layout row wrap>
-            <v-flex xs12>
-              <v-card-actions>
-                <v-btn flat class="error--text" @click="onDiscard">Discard</v-btn>
-                <v-btn flat class="info--text" @click="onAddStat">Add Stat</v-btn>
-              </v-card-actions>
-            </v-flex>
-          </v-layout>
+          <v-form ref="form" v-model="valid" lazy-validation @submit.prevent="onAddStat">
+            <v-layout row wrap>
+              <v-flex xs12>
+                <v-card-text>
+                    <v-text-field
+                      name="name"
+                      label="Name"
+                      id="name"
+                      v-model="statName"
+                      :rules="statRules"
+                      :counter="3"
+                      required>
+                    </v-text-field>
+                  </v-card-text>
+                </v-flex>
+              </v-layout>
+              <v-divider></v-divider>
+              <v-layout row wrap>
+                <v-flex xs12>
+                  <v-card-actions>
+                    <v-btn flat class="error--text" @click="onDiscard">Discard</v-btn>
+                    <v-btn
+                      flat
+                      class="info--text"
+                      :disabled="!valid"
+                      type="submit"
+                      >
+                      Add Stat
+                    </v-btn>
+                  </v-card-actions>
+              </v-flex>
+            </v-layout>
+          </v-form>
         </v-container>
       </v-card>
     </v-dialog>
-
-
   </div>
 </template>
 
@@ -140,11 +150,16 @@
         valid: false,
         nameRules: [
           (v) => !!v || 'Name is required',
-          (v) => v.length >= 5 || 'Name must be more than 3 characters'
+          (v) => v.length >= 5 || 'Name must be at least 5 characters'
         ],
         descriptionRules: [
           (v) => !!v || 'Description is required',
-          (v) => v.length >= 10 || 'Descriptio must be more than 10 characters'
+          (v) => v.length >= 10 || 'Description must be at least 10 characters'
+        ],
+        statRules: [
+          (v) => !!v || 'Stat name is required',
+          (v) => v.length >= 3 || 'Stat name must be at least 3 characters'
+          // todo: (v) => this.profileItems.indexOf(v) >= 0 || 'Stat names must be unique.'
         ],
         preview: false
       }
@@ -158,7 +173,7 @@
       }
     },
     methods: {
-      remove (item) {
+      removeStat (item) {
         this.profileItems.splice(this.profileItems.indexOf(item), 1)
         this.profileItems = [...this.profileItems]
       },
