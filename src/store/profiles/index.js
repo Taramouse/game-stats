@@ -4,13 +4,14 @@ import * as firebase from 'firebase'
 export default {
   state: {
     profileName: 'Real Racing 3',
-    profileDescription: 'For logging loads of Real Racing 3 stats.',
+    profileDescription: 'Log fastest lap and race time for tracks and cars.',
     profileItems: [
-      { title: 'Fastest Lap', align: 'center', sortable: false, value: 'name' },
-      { title: 'Race Time', value: 'name', align: 'center', sortable: false, value: 'name' },
-      { title: 'Circuit', value: 'name', align: 'center', sortable: false, value: 'name' },
-      { title: 'Car Manufacturer', value: 'name', align: 'center', sortable: false, value: 'name' },
-      { title: 'Car Model', value: 'name', align: 'center', sortable: false, value: 'name' }
+      { text: 'Date Recorded', value: 'date' },
+      { text: 'Fastest Lap', value: 'Fastest Lap' },
+      { text: 'Race Time', value: 'Race Time' },
+      { text: 'Circuit', value: 'Circuit' },
+      { text: 'Car Manufacturer', value: 'Car Manufacturer' },
+      { text: 'Car Model', value: 'Car Model' }
     ]
   },
   mutations: {
@@ -65,7 +66,7 @@ export default {
         .catch(
           (error) => {
             console.log(error)
-            commit('setLoading', true)
+            commit('setLoading', false)
           }
         )
     }

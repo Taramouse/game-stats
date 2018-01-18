@@ -5,7 +5,7 @@
         <app-alert @dismissed="onDismissed" :text="error.message"></app-alert>
       </v-flex>
      </v-layout>
-     <v-card class="card--flex-toolbar mb-2">
+     <v-card class="card--flex-toolbar">
         <v-form v-model="valid" ref="form" lazy-validation @submit.prevent="onCreateProfile">
 
           <v-toolbar card dark>
@@ -28,7 +28,7 @@
             </v-toolbar-items>
           </v-toolbar>
 
-          <v-card-text>
+          <v-card-text v-if="!preview">
             <v-layout row>
               <v-flex>
                 <div class="editArea pa-4">
@@ -48,10 +48,9 @@
                 ></v-text-field>
                 <draggable
                   v-model="profileItems"
-                  :options="{group:'stats'}"
                   @start="drag=true"
-                  @end="drag=false">
-                <transition-group>
+                  @end="drag=false"
+                ><transition-group>
                   <div v-for="item in profileItems" :key="item.text">
                     <v-chip close light @input="removeStat(item)">{{item.text}}</v-chip>
                   </div>
@@ -63,12 +62,11 @@
       </v-card-text>
     </v-form>
   </v-card>
-    <v-layout row v-if="preview">
-      <v-flex>
-        <v-card dark class="text-xs-center">
-          <h1>{{profileName}}</h1>
-          <h2>{{profileDescription}}</h2>
-          <v-divider></v-divider>
+    <v-layout row wrap v-if="preview">
+      <v-flex xs12>
+        <v-card dark class="text-xs-center purple">
+          <h1 class="display-4 pt-2 pb-2">{{profileName}}</h1>
+          <h5 class="subheading pa-2">{{profileDescription}}</h5>
           <v-data-table
             v-bind:headers="profileItems"
             :items="items"
@@ -80,8 +78,8 @@
             <td>{{ <props class="item name"></props> }}</td>
           </template>
           <template slot="no-data">
-            <v-alert :value="true" color="success" icon="info">
-              Your recorded stats will display here.
+            <v-alert outline :value="true" color="info" icon="info" transition="scale-transition">
+              Your recorded stats will be displayed in this area.
             </v-alert>
           </template>
         </v-data-table>
@@ -138,12 +136,20 @@
 </template>
 
 <<script>
+  /* eslint-disable no-dupe-keys */
   export default {
     data () {
       return {
-        profileName: '',
-        profileDescription: '',
-        profileItems: [],
+        profileName: 'Real Racing 3',
+        profileDescription: 'Log fastest lap and race time for tracks and cars.',
+        profileItems: [
+          { text: 'Date Recorded', value: 'date' },
+          { text: 'Fastest Lap', value: 'Fastest Lap' },
+          { text: 'Race Time', value: 'Race Time' },
+          { text: 'Circuit', value: 'Circuit' },
+          { text: 'Car Manufacturer', value: 'Car Manufacturer' },
+          { text: 'Car Model', value: 'Car Model' }
+        ],
         statName: '',
         items: [],
         editDialogue: false,
@@ -158,8 +164,8 @@
         ],
         statRules: [
           (v) => !!v || 'Stat name is required',
-          (v) => v.length >= 3 || 'Stat name must be at least 3 characters'
-          // todo: (v) => this.profileItems.indexOf(v) >= 0 || 'Stat names must be unique.'
+          (v) => v.length >= 3 || 'Stat name must be at least 3 characters',
+          (v) => this.profileItems.indexOf(v) === -1 || 'Stat names must be unique.'
         ],
         preview: false
       }
@@ -199,9 +205,7 @@
         // ToDo These names must be unique - need validation
         this.profileItems.push({
           text: this.statName,
-          align: 'center',
-          sortable: false,
-          value: 'name'
+          value: this.statName
         })
         // this.$store.dispatch('updateMeetupData', {
         //   id: this.meetup.id,
