@@ -76,6 +76,29 @@ export default {
           }
         )
     },
+    signUserInGoogle ({commit}) {
+      commit('setLoading', true)
+      commit('clearError')
+      let provider = new firebase.auth.GoogleAuthProvider()
+      firebase.auth().signInWithPopup(provider)
+        .then(result => {
+          commit('setLoading', false)
+          const newUser = {
+            token: result.credential.accessToken,
+            // secret: result.credential.secret,
+            user: result.user,
+            fbKeys: {}
+          }
+          commit('setUser', newUser)
+        })
+        .catch(
+          error => {
+            commit('setLoading', false)
+            commit('setError', error)
+            console.log(error)
+          }
+        )
+    },
     autoSignIn ({commit}, payload) {
       commit('setUser', {
         id: payload.uid,

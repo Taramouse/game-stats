@@ -19,6 +19,7 @@
                       id="email"
                       v-model="email"
                       type="email"
+                      autocomplete="current-email"
                       required></v-text-field>
                   </v-flex>
                 </v-layout>
@@ -30,16 +31,24 @@
                       id="password"
                       v-model="password"
                       type="password"
+                      autocomplete="current-password"
                       required></v-text-field>
                   </v-flex>
                 </v-layout>
                 <v-layout row>
                   <v-flex xs12>
-                    <v-btn type="submit" :disabled="loading" :loading="loading">
+                    <v-btn block type="submit" :disabled="loading" :loading="loading">
                       Sign in
                     </v-btn>
-                    <v-btn @click="onSignInTwitter" :disabled="loading" :loading="loading">
-                      Twitter Login
+                    <v-subheader class="subheading">Social sign in</v-subheader>
+                    <v-btn block color="blue" @click="onSignInTwitter" :disabled="loading" :loading="loading">
+                      Twitter
+                    </v-btn>
+                    <v-btn block light @click="onSignInGoogle" :disabled="loading" :loading="loading">
+                      Google
+                    </v-btn>
+                    <v-btn block color="indigo" :disabled="loading" :loading="loading">
+                      Facebook
                     </v-btn>
                   </v-flex>
                 </v-layout>
@@ -84,6 +93,9 @@
       },
       onSignInTwitter () {
         this.$store.dispatch('signUserInTwitter')
+      },
+      onSignInGoogle () {
+        this.$store.dispatch('signUserInGoogle')
       },
       onDismissed () {
         this.$store.dispatch('clearError')
