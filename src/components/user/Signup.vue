@@ -48,9 +48,6 @@
                   <v-flex xs12>
                     <v-btn type="submit" :disabled="loading" :loading="loading">
                       Sign up
-                       <span slot="loader" class="custom-loader">
-                        <v-icon light>cached</v-icon>
-                       </span>
                     </v-btn>
                      <v-btn @click="onSignInTwitter" :disabled="loading" :loading="loading">
                       Twitter Login
