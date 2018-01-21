@@ -1,29 +1,35 @@
 <template>
-    <v-layout row wrap>
-      <v-flex sm12 md8 offset-md2>
-        <v-card class="grid">
 
-          <v-container grid-list-lg class="grey darken-4">
-            <v-layout row wrap>
-              <v-flex xs4 v-for="item in menuItems" :key="item.title">
+  <v-layout>
+    <v-flex xs12 sm6 offset-sm3>
+      <v-card>
+        <v-container fluid class="grid-list-md">
+          <v-layout row wrap>
+            <v-flex
+              xs4
+              md2
+              v-for="item in menuItems"
+              :key="item.title"
+            >
+              <v-card flat tile v-ripple>
+                <router-link :to="item.link" tag="a">
+                  <v-layout justify-space-around align-center>
+                    <v-avatar tile>
+                      <v-icon :color="item.color" x-large>{{item.icon}}</v-icon>
+                    </v-avatar>
+                  </v-layout>
+                  <v-layout justify-space-around align-center class="mb-1">
+                      <span class="grey--text">{{item.title}}</span>
+                  </v-layout>
+                </router-link>
+              </v-card>
+            </v-flex>
+          </v-layout>
+        </v-container>
+      </v-card>
+    </v-flex>
+  </v-layout>
 
-                <v-layout justify-space-around align-center>
-                    <router-link v-ripple :to="item.link" tag="a">
-                      <v-avatar tile size="8em">
-                        <v-icon :color="item.color" x-large>{{item.icon}}</v-icon>
-                      </v-avatar>
-                    </router-link>
-                </v-layout>
-                <v-layout justify-space-around align-center class="mb-1">
-                    <span class="grey--text">{{item.title}}</span>
-                </v-layout>
-
-              </v-flex>
-            </v-layout>
-          </v-container>
-        </v-card>
-      </v-flex>
-    </v-layout>
 </template>
 
 <script>
@@ -54,5 +60,4 @@
     text-decoration: none;
     cursor: pointer;
   }
-
 </style>
