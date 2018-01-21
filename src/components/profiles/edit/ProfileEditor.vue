@@ -1,10 +1,12 @@
 <template>
-  <div>
+  <v-layout>
     <v-layout row v-if="error">
       <v-flex xs12 sm6 offset-sm3>
         <app-alert @dismissed="onDismissed" :text="error.message"></app-alert>
       </v-flex>
-     </v-layout>
+    </v-layout>
+    <v-layout row>
+     <v-flex xs12>
      <v-card class="card--flex-toolbar">
         <v-form v-model="valid" ref="form" lazy-validation @submit.prevent="onCreateProfile">
 
@@ -29,9 +31,8 @@
           </v-toolbar>
 
           <v-card-text v-if="!preview">
-            <v-layout row>
-              <v-flex>
-                <div class="editArea pa-4">
+            <v-flex>
+              <div class="editArea pa-4">
                 <v-text-field
                   label="Profile Name"
                   v-model="profileName"
@@ -56,37 +57,38 @@
                   </div>
                 </transition-group>
               </draggable>
-            </div>
-          </v-flex>
-        </v-layout>
-      </v-card-text>
-    </v-form>
-  </v-card>
-    <v-layout row wrap v-if="preview">
-      <v-flex xs12>
-        <v-card dark class="text-xs-center purple">
-          <h1 class="display-4 pt-2 pb-2">{{profileName}}</h1>
-          <h5 class="subheading pa-2">{{profileDescription}}</h5>
-          <v-data-table
-            v-bind:headers="profileItems"
-            :items="items"
-            hide-actions
-            class="elevation-1"
-            dark
-          >
-          <template slot="items" slot-scope="props">
-            <td>{{ <props class="item name"></props> }}</td>
-          </template>
-          <template slot="no-data">
-            <v-alert outline :value="true" color="info" icon="info" transition="scale-transition">
-              Your recorded stats will be displayed in this area.
-            </v-alert>
-          </template>
-        </v-data-table>
-      </v-card>
-    </v-flex>
-  </v-layout>
+              </div>
+            </v-flex>
+          </v-card-text>
 
+          <v-card-text v-if="preview">
+            <v-flex>
+            <h1 class="display-4 py-2">{{profileName}}</h1>
+            <h5 class="subheading pa-3">{{profileDescription}}</h5>
+            <v-data-table
+              v-bind:headers="profileItems"
+              :items="items"
+              hide-actions
+              class="elevation-1"
+              dark
+            >
+              <template slot="items" slot-scope="props">
+                <td>{{ <props class="item name"></props> }}</td>
+              </template>
+              <template slot="no-data">
+                <v-alert outline :value="true" color="info" icon="info" transition="scale-transition">
+                  Your recorded stats will be displayed in this area.
+                </v-alert>
+              </template>
+            </v-data-table>
+            </v-flex>
+          </v-card-text>
+
+          </v-form>
+        </v-card>
+
+      </v-flex>
+    </v-layout>
     <v-dialog width="350px" persistent v-model="editDialogue">
       <v-card>
         <v-container>
@@ -132,7 +134,7 @@
         </v-container>
       </v-card>
     </v-dialog>
-  </div>
+  </v-layout>
 </template>
 
 <<script>
