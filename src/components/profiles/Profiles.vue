@@ -1,5 +1,4 @@
 <template>
-
   <v-layout>
     <v-flex xs12 sm6 offset-sm3>
       <v-card>
@@ -7,7 +6,6 @@
           <v-layout row wrap>
             <v-flex
               xs4
-              md2
               v-for="item in menuItems"
               :key="item.title"
             >
@@ -29,7 +27,6 @@
       </v-card>
     </v-flex>
   </v-layout>
-
 </template>
 
 <script>
