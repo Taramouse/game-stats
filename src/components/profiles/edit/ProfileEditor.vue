@@ -83,7 +83,7 @@
                   <v-flex xs12>
                     <v-card-text>
                       <v-data-table
-                        v-bind:headers="profileItems"
+                        :headers="profileItems"
                         :items="items"
                         hide-actions
                         disable-initial-sort
@@ -92,7 +92,13 @@
                       >
                       </v-data-table>
                       <template slot="items" slot-scope="props">
-                        <td>{{ <props class="item name"></props> }}</td>
+                        <td>{{ props.item.name }}</td>
+                        <!-- <td class="text-xs-right">{{ props.item.date }}</td>
+                        <td class="text-xs-right">{{ props.item.fastest-lap }}</td>
+                        <td class="text-xs-right">{{ props.item.race-time }}</td>
+                        <td class="text-xs-right">{{ props.item.circuit }}</td>
+                        <td class="text-xs-right">{{ props.item.car-manufacturer }}</td>
+                        <td class="text-xs-right">{{ props.item.car-model }}</td> -->
                       </template>
                       <template slot="no-data">
                         <v-alert :value="true" color="info" icon="info" transition="scale-transition">
@@ -102,12 +108,16 @@
                     </v-card-text>
                   </v-flex>
                 </v-layout>
+                <!-- Small Preview -->
                 <v-layout row wrap class="hidden-md-and-up">
                   <v-flex xs12>
                     <v-card-text>
-                      <v-alert :value="true" color="info" icon="info" transition="scale-transition">
-                        The data iterator will go here when it works.
-                      </v-alert>
+                      <v-list>
+                        <v-list-tile v-for="item in profileItems" :key="item.text">
+                          <v-list-tile-content>{{item.text}}</v-list-tile-content>
+                          <v-list-tile-content class="align-end">Enter stat here</v-list-tile-content>
+                        </v-list-tile>
+                      </v-list>
                     </v-card-text>
                   </v-flex>
                 </v-layout>
@@ -130,14 +140,17 @@
         profileDescription: 'Log fastest lap and race time for tracks and cars.',
         profileItems: [
           { text: 'Date Recorded', value: 'date' },
-          { text: 'Fastest Lap', value: 'Fastest Lap' },
-          { text: 'Race Time', value: 'Race Time' },
-          { text: 'Circuit', value: 'Circuit' },
-          { text: 'Car Manufacturer', value: 'Car Manufacturer' },
-          { text: 'Car Model', value: 'Car Model' }
+          { text: 'Fastest Lap', value: 'fastest-lap' },
+          { text: 'Race Time', value: 'race-time' },
+          { text: 'Circuit', value: 'circuit' },
+          { text: 'Car Manufacturer', value: 'car-manufacturer' },
+          { text: 'Car Model', value: 'car-model' }
         ],
         statName: '',
-        items: [],
+        items: [
+          { value: false, name: 'Record 1', date: '23-01-18', 'fastest-lap': '1:30.673', 'race-time': '10:48.549', circuit: 'Spa francorchamps', 'car-manufacturer': 'Porche', 'car-model': '911 RSR 2014' },
+          { value: false, name: 'Record 2', date: '24-01-18', 'fastest-lap': '1:30.432', 'race-time': '10:28.338', circuit: 'Spa francorchamps', 'car-manufacturer': 'Porche', 'car-model': '911 RSR 2014' }
+        ],
         editDialogue: false,
         valid: false,
         nameRules: [
