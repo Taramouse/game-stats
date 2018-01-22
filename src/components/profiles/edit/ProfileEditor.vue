@@ -79,7 +79,7 @@
                       </div>
                   </v-flex>
                 </v-layout>
-                <v-layout row wrap>
+                <v-layout row wrap class="hidden-sm-and-down">
                   <v-flex xs12>
                     <v-card-text>
                       <v-data-table
