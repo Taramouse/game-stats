@@ -7,11 +7,15 @@ export default {
     profileDescription: 'Log fastest lap and race time for tracks and cars.',
     profileItems: [
       { text: 'Date Recorded', value: 'date' },
-      { text: 'Fastest Lap', value: 'Fastest Lap' },
-      { text: 'Race Time', value: 'Race Time' },
-      { text: 'Circuit', value: 'Circuit' },
-      { text: 'Car Manufacturer', value: 'Car Manufacturer' },
-      { text: 'Car Model', value: 'Car Model' }
+          { text: 'Fastest Lap', value: 'fastest-lap' },
+          { text: 'Race Time', value: 'race-time' },
+          { text: 'Circuit', value: 'circuit' },
+          { text: 'Car Manufacturer', value: 'car-manufacturer' },
+          { text: 'Car Model', value: 'car-model' }
+    ],
+    items: [
+      { value: false, name: 'Record 1', date: '23-01-18', 'fastest-lap': '1:30.673', 'race-time': '10:48.549', circuit: 'Spa francorchamps', 'car-manufacturer': 'Porche', 'car-model': '911 RSR 2014' },
+      { value: false, name: 'Record 2', date: '24-01-18', 'fastest-lap': '1:30.432', 'race-time': '10:28.338', circuit: 'Spa francorchamps', 'car-manufacturer': 'Porche', 'car-model': '911 RSR 2014' }
     ]
   },
   mutations: {
