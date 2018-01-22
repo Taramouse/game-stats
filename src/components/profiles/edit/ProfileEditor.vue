@@ -125,9 +125,54 @@
             </v-card>
           </v-flex>
         </v-layout>
-
       </v-container>
     </v-card>
+    <!-- Add stat dialog -->
+    <v-dialog width="350px" persistent v-model="editDialogue">
+      <v-card>
+        <v-container>
+          <v-layout row wrap>
+            <v-flex xs12>
+              <v-card-title>Enter Stat Name</v-card-title>
+            </v-flex>
+          </v-layout>
+          <v-divider></v-divider>
+          <v-form ref="form" v-model="valid" lazy-validation @submit.prevent="onAddStat">
+            <v-layout row wrap>
+              <v-flex xs12>
+                <v-card-text>
+                    <v-text-field
+                      name="name"
+                      label="Name"
+                      id="name"
+                      v-model="statName"
+                      :rules="statRules"
+                      :counter="3"
+                      required>
+                    </v-text-field>
+                  </v-card-text>
+                </v-flex>
+              </v-layout>
+              <v-divider></v-divider>
+              <v-layout row wrap>
+                <v-flex xs12>
+                  <v-card-actions>
+                    <v-btn flat class="error--text" @click="onDiscard">Discard</v-btn>
+                    <v-btn
+                      flat
+                      class="info--text"
+                      :disabled="!valid"
+                      type="submit"
+                      >
+                      Add Stat
+                    </v-btn>
+                  </v-card-actions>
+              </v-flex>
+            </v-layout>
+          </v-form>
+        </v-container>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
