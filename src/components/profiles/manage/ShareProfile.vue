@@ -1,10 +1,7 @@
 <template>
-  <v-container fluid>
-      <v-layout column align-center>
-        <div>
-          <h2 class="text-xs-center">Share Profile</h2>
-          <p>List of selectable profiles here - ProfileList component</p>
-        </div>
-      </v-layout>
-  </v-container>
+  <v-layout justify-center align-center >
+    <div>
+      <span class="display-2">Share Profiles</span>
+    </div>
+  </v-layout>
 </template>

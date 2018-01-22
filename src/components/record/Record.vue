@@ -1,9 +1,8 @@
 <template>
-  <v-container fluid>
-      <v-layout column align-center>
-        <div>
-          <h2 class="text-xs-center">Record Game Stats</h2>
-        </div>
-      </v-layout>
-  </v-container>
+  <v-layout justify-center align-center >
+    <img src="/static/img/v.png" alt="Vuetify.js" class="mb-5">
+    <div>
+      <span class="display-2">Record your game stats here.</span>
+    </div>
+  </v-layout>
 </template>

@@ -48,7 +48,11 @@
       </v-toolbar-items>
     </v-toolbar>
     <v-content class="grad-background">
-      <router-view></router-view>
+      <v-container fluid fill-height class="pa-0">
+        <v-slide-y-transition mode="out-in">
+          <router-view></router-view>
+        </v-slide-y-transition>
+       </v-container>
     </v-content>
     <v-footer fixed app>
       <span>Nicky Keyse 2018</span>
