@@ -87,7 +87,7 @@
                         :items="items"
                         hide-actions
                         disable-initial-sort
-                        class="elevation-3"
+                        class="elevation-1"
                         dark
                       >
                       </v-data-table>
@@ -95,10 +95,19 @@
                         <td>{{ <props class="item name"></props> }}</td>
                       </template>
                       <template slot="no-data">
-                        <v-alert :value="true" color="error" icon="warning">
-                          Sorry, nothing to display here :(
+                        <v-alert :value="true" color="info" icon="info" transition="scale-transition">
+                          Your recorded stats will be displayed in this area.
                         </v-alert>
                       </template>
+                    </v-card-text>
+                  </v-flex>
+                </v-layout>
+                <v-layout row wrap class="hidden-md-and-up">
+                  <v-flex xs12>
+                    <v-card-text>
+                      <v-alert :value="true" color="info" icon="info" transition="scale-transition">
+                        The data iterator will go here when it works.
+                      </v-alert>
                     </v-card-text>
                   </v-flex>
                 </v-layout>
