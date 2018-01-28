@@ -1,6 +1,5 @@
 <template>
   <div>
-    <v-form v-model="valid" ref="form" lazy-validation @submit.prevent="createProfile">
      <!-- Toolbar -->
     <v-toolbar dark flat>
       <v-toolbar-title>Editor</v-toolbar-title>
@@ -10,10 +9,16 @@
           <v-icon left>add</v-icon>
           <span class="hidden-sm-and-down">Add Stat</span>
         </v-btn>
-        <v-btn flat type="submit" :disabled="loading || !valid" :loading="loading">
-          <v-icon left>cloud_upload</v-icon>
-          <span class="hidden-sm-and-down">Save</span>
-        </v-btn>
+
+          <v-btn
+            flat
+            @click="createProfile"
+            :disabled="loading || !valid"
+            :loading="loading">
+            <v-icon left>cloud_upload</v-icon>
+            <span class="hidden-sm-and-down">Save</span>
+          </v-btn>
+
         <v-btn flat @click="preview = !preview">
           <v-icon color="primary" left v-if="preview">remove_red_eye</v-icon>
           <v-icon left v-if="!preview">remove_red_eye</v-icon>
@@ -25,41 +30,40 @@
     <v-card tile>
       <v-container fluid class="pa-0">
 
-          <v-layout row v-if="!preview">
-            <v-flex xs12>
-              <v-card color="blue-grey darken-2" class="white--text">
-                <v-card-text>
-                  <div class="editArea pa-4">
-                  <v-text-field
-                    label="Profile Name"
-                    v-model="profileName"
-                    :rules="nameRules"
-                    :counter="5"
-                    required
-                  ></v-text-field>
-                  <v-text-field
-                    label="Profile Description"
-                    v-model="profileDescription"
-                    :rules="descriptionRules"
-                    :counter="10"
-                    required
-                  ></v-text-field>
-                  <draggable
-                    v-model="profileItems"
-                    @start="drag=true"
-                    @end="drag=false"
-                  ><transition-group>
-                    <div v-for="item in profileItems" :key="item.text">
-                      <v-chip close light @input="removeStat(item.text)">{{item.text}}</v-chip>
-                    </div>
-                  </transition-group>
-                </draggable>
-                </div>
-                </v-card-text>
-              </v-card>
-            </v-flex>
-          </v-layout>
-
+        <v-layout row v-if="!preview">
+          <v-flex xs12>
+            <v-card color="blue-grey darken-2" class="white--text">
+              <v-card-text>
+                <div class="editArea pa-4">
+                <v-text-field
+                  label="Profile Name"
+                  v-model="profileName"
+                  :rules="nameRules"
+                  :counter="5"
+                  required
+                ></v-text-field>
+                <v-text-field
+                  label="Profile Description"
+                  v-model="profileDescription"
+                  :rules="descriptionRules"
+                  :counter="10"
+                  required
+                ></v-text-field>
+                <draggable
+                  v-model="profileItems"
+                  @start="drag=true"
+                  @end="drag=false"
+                ><transition-group>
+                  <div v-for="item in profileItems" :key="item.text">
+                    <v-chip close light @input="removeStat(item.text)">{{item.text}}</v-chip>
+                  </div>
+                </transition-group>
+              </draggable>
+              </div>
+              </v-card-text>
+            </v-card>
+          </v-flex>
+        </v-layout>
         <!-- Preview -->
         <v-layout row v-if="preview">
           <v-flex xs12>
@@ -171,7 +175,6 @@
         </v-container>
       </v-card>
     </v-dialog>
-    </v-form>
   </div>
 </template>
 
@@ -180,9 +183,6 @@
   export default {
     data () {
       return {
-        profileName: '',
-        profileDescription: '',
-        profileItems: [],
         newItem: '',
         items: [
           { value: false, name: 'Record 1', date: '23-01-18', 'fastest-lap': '1:30.673', 'race-time': '10:48.549', circuit: 'Spa francorchamps', 'car-manufacturer': 'Porche', 'car-model': '911 RSR 2014' },
@@ -207,6 +207,33 @@
       }
     },
     computed: {
+      profileName: {
+        get () {
+          return this.$store.getters.getProfileById(1).name
+        },
+        set (value) {
+          this.$store.commit('updateProfileName', value)
+        }
+      },
+      profileDescription: {
+        get () {
+          return this.$store.getters.getProfileById(1).description
+        },
+        set (value) {
+          this.$store.commit('updateProfileDescription', value)
+        }
+      },
+      profileItems: {
+        get () {
+          return this.$store.getters.getProfileById(1).items
+        },
+        set (value) {
+          this.$store.commit('updateProfileItems', value)
+        }
+      },
+      // profileItems () {
+      //   return this.$store.getters.getProfileById(1).items
+      // },
       error () {
         return this.$store.getters.error
       },
@@ -228,12 +255,11 @@
           // ToDo replace spaces with - for value
         }
         console.log(item)
-        this.profileItems.push(item)
+        this.$store.commit('updateProfileItems', item)
       },
       removeStat (item) {
         console.log(item)
-        this.profileItems.splice(this.profileItems.indexOf(item), 1)
-        this.profileItems = [...this.profileItems]
+        this.$store.commit('removeProfileItem', item)
       },
       createProfile () {
         const profileData = {
