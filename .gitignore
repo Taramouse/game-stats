@@ -15,3 +15,4 @@ test/unit/coverage
 *.sln
 *.swp
 *.code-workspace
+src/FormatTest.vue
