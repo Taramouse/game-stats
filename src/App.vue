@@ -7,7 +7,7 @@
       v-model="sideNav"
       app>
       <v-list>
-        <v-subheader>Stats</v-subheader>
+        <v-subheader v-if="userIsAuthenticated">Stats</v-subheader>
         <v-list-tile
           v-for="item in menuItems"
           :key="item.title"
@@ -20,8 +20,9 @@
             <v-list-tile-title>{{ item.title }}</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
-        <v-subheader>Manage Profiles</v-subheader>
+        <v-subheader v-if="userIsAuthenticated">Manage Profiles</v-subheader>
         <v-list-tile
+          v-if="userIsAuthenticated"
           v-for="item in profileMenuItems"
           :key="item.title"
           :to="item.link"
@@ -102,7 +103,6 @@
         profileMenuItems: [
           {icon: 'add', title: 'New Profile', link: '/new-profile', color: 'info'},
           {icon: 'cloud_download', title: 'Download Profile', link: '/download-profile', color: 'success'},
-          // {icon: 'cloud_upload', title: 'Upload Profile', link: '/upload-profile', color: 'success'},
           {icon: 'edit', title: 'Edit Profile', link: '/edit-profile', color: 'warning'},
           {icon: 'share', title: 'Share Profile', link: '/share-profile', color: 'info'},
           {icon: 'delete', title: 'Delete Profile', link: '/delete-profile', color: 'error'}
