@@ -51,7 +51,6 @@
                 </v-card>
               </v-flex>
             </v-layout>
-
           </v-container>
         </v-card>
       </v-flex>
