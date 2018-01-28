@@ -14,7 +14,7 @@
           :to="item.link"
           exact>
           <v-list-tile-action>
-            <v-icon dark>{{ item.icon }}</v-icon>
+            <v-icon :color="item.color">{{ item.icon }}</v-icon>
           </v-list-tile-action>
           <v-list-tile-content>
             <v-list-tile-title>{{ item.title }}</v-list-tile-title>
@@ -27,7 +27,7 @@
           :to="item.link"
           exact>
           <v-list-tile-action>
-            <v-icon dark>{{ item.icon }}</v-icon>
+            <v-icon :color="item.color">{{ item.icon }}</v-icon>
           </v-list-tile-action>
           <v-list-tile-content>
             <v-list-tile-title>{{ item.title }}</v-list-tile-title>
@@ -64,7 +64,7 @@
           <v-list>
             <v-list-tile v-for="item in profileMenuItems" :key="item.title" :to="item.link">
               <v-list-tile-action>
-                <v-icon left dark>{{ item.icon }}</v-icon>
+                <v-icon :color="item.color" left dark>{{ item.icon }}</v-icon>
               </v-list-tile-action>
               <v-list-tile-title>{{ item.title }}</v-list-tile-title>
             </v-list-tile>
@@ -102,7 +102,7 @@
         profileMenuItems: [
           {icon: 'add', title: 'New Profile', link: '/new-profile', color: 'info'},
           {icon: 'cloud_download', title: 'Download Profile', link: '/download-profile', color: 'success'},
-          // {icon: 'cloud_upload', title: 'Upload Profile', link: '/share-profile', color: 'success'},
+          // {icon: 'cloud_upload', title: 'Upload Profile', link: '/upload-profile', color: 'success'},
           {icon: 'edit', title: 'Edit Profile', link: '/edit-profile', color: 'warning'},
           {icon: 'share', title: 'Share Profile', link: '/share-profile', color: 'info'},
           {icon: 'delete', title: 'Delete Profile', link: '/delete-profile', color: 'error'}
