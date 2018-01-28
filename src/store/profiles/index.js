@@ -102,7 +102,7 @@ export default {
     },
     getLoadedProfiles (state) {
       return state.loadedProfiles.sort((profileA, profileB) => {
-        return profileA.date > profileB.date
+        return profileA.date < profileB.date
       })
     }
   }
