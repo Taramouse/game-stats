@@ -53,11 +53,10 @@
           <v-icon :color="item.color" left>{{ item.icon }}</v-icon>
           {{ item.title }}
         </v-btn>
-        <v-menu transition="slide-y-transition" offset-y>
+        <v-menu v-if="userIsAuthenticated" transition="slide-y-transition" offset-y>
           <v-btn
             flat
             class="hidden-sm-and-down"
-            v-if="userIsAuthenticated"
             slot="activator">
             <v-icon class="primary--text" left dark>build</v-icon>
             Manage Profiles
