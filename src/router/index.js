@@ -6,13 +6,11 @@ import Signup from '@/components/user/Signup'
 import Signin from '@/components/user/Signin'
 import Record from '@/components/record/Record'
 import Stats from '@/components/stats/Stats'
-import Profiles from '@/components/profiles/Profiles'
 import NewProfile from '@/components/profiles/manage/NewProfile'
 import DeleteProfile from '@/components/profiles/manage/DeleteProfile'
 import DownloadProfile from '@/components/profiles/manage/DownloadProfile'
 import EditProfile from '@/components/profiles/manage/EditProfile'
 import ShareProfile from '@/components/profiles/manage/ShareProfile'
-import UploadProfile from '@/components/profiles/manage/UploadProfile'
 import PreviewProfile from '@/components/profiles/manage/PreviewProfile'
 
 Vue.use(Router)
@@ -44,12 +42,6 @@ export default new Router({
       path: '/record',
       name: 'Record',
       component: Record,
-      beforeEnter: AuthGuard
-    },
-    {
-      path: '/profiles',
-      name: 'Profiles',
-      component: Profiles,
       beforeEnter: AuthGuard
     },
     {
@@ -86,12 +78,6 @@ export default new Router({
       path: '/share-profile',
       name: 'ShareProfile',
       component: ShareProfile,
-      beforeEnter: AuthGuard
-    },
-    {
-      path: '/upload-profile',
-      name: 'UploadProfile',
-      component: UploadProfile,
       beforeEnter: AuthGuard
     }
   ]
