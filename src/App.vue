@@ -49,7 +49,7 @@
           v-for="item in menuItems"
           :key="item.title"
           :to="item.link">
-          <v-icon :color="item.color" left dark>{{ item.icon }}</v-icon>
+          <v-icon :color="item.color" left>{{ item.icon }}</v-icon>
           {{ item.title }}
         </v-btn>
         <v-menu transition="slide-y-transition" offset-y>
