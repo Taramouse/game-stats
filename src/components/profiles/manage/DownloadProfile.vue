@@ -62,7 +62,6 @@
     data () {
       return {
         cardActions: [
-          // {icon: 'remove_red_eye', title: 'Preview', link: '/preview-profile/', color: 'info'},
           {icon: 'cloud_download', title: 'Download', link: '#', color: 'success'},
           {icon: 'edit', title: 'Edit', link: '#', color: 'warning'},
           {icon: 'delete', title: 'Delete', link: '#', color: 'error'}
