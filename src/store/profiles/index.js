@@ -98,7 +98,7 @@ export default {
   },
   getters: {
     getProfileById: (state) => (id) => {
-      return state.loadedProfiles.find(loadedProfile => loadedProfile.id === id)
+      return state.loadedProfiles.find(loadedProfiles => loadedProfiles.id === id)
     },
     getLoadedProfiles (state) {
       return state.loadedProfiles.sort((profileA, profileB) => {

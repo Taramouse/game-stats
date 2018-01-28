@@ -13,6 +13,7 @@ import DownloadProfile from '@/components/profiles/manage/DownloadProfile'
 import EditProfile from '@/components/profiles/manage/EditProfile'
 import ShareProfile from '@/components/profiles/manage/ShareProfile'
 import UploadProfile from '@/components/profiles/manage/UploadProfile'
+import PreviewProfile from '@/components/profiles/manage/PreviewProfile'
 
 Vue.use(Router)
 
@@ -50,6 +51,12 @@ export default new Router({
       name: 'Profiles',
       component: Profiles,
       beforeEnter: AuthGuard
+    },
+    {
+      path: '/profiles/:id',
+      name: 'Preview Profile',
+      props: true,
+      component: PreviewProfile
     },
     {
       path: '/new-profile',
