@@ -60,10 +60,9 @@
                           <v-list-tile v-for="item in profile.items" :key="item.text">
                             <v-list-tile-content>{{item.text}}</v-list-tile-content>
                             <v-list-tile-content class="align-end">
-                              <v-text-field
-                                dark
-                                :name="item.value"
-                                ></v-text-field>
+
+                              Edit this bit
+
                             </v-list-tile-content>
                           </v-list-tile>
                         </v-list>
@@ -87,7 +86,14 @@
     },
     computed: {
       profile () {
-        return this.$store.getters.getProfileById(this.id)
+        if (this.id) {
+          return this.$store.getters.getProfileById(this.id)
+        } else if (this.$store.getters.hasActiveProfile) {
+          return this.$store.getters.getActiveProfile
+        } else {
+          const profile = { id: '0', name: 'No Active Profile', description: 'Please download or create a new profile.', items: [] }
+          return profile
+        }
       },
       userIsAuthenticated () {
         return this.$store.getters.user !== null && this.$store.getters.user !== undefined
