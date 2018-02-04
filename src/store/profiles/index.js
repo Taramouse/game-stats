@@ -17,11 +17,15 @@ export default {
           { text: 'Car Model', value: 'car-model' }
         ]
       }
-    ]
+    ],
+    activeProfile: {}
   },
   mutations: {
     setLoadedProfiles (state, profiles) {
       state.loadedProfiles = profiles
+    },
+    setActiveProfile (state, profile) {
+      state.activeProfile = profile
     },
     updateProfileName (state, payload) {
       state.loadedProfiles.name = payload
@@ -46,6 +50,24 @@ export default {
     }
   },
   actions: {
+    enablePersistence () {
+      firebase.database().ref('user-profiles').enablePersistence()
+        .then(() => {
+          // Initialize Cloud Firestore through firebase
+          // var db = firebase.firestore();
+        })
+        .catch((err) => {
+          if (err.code === 'failed-precondition') {
+              // Multiple tabs open, persistence can only be enabled
+              // in one tab at a a time.
+              // ...
+          } else if (err.code === 'unimplemented') {
+              // The current browser does not support all of the
+              // features required to enable persistence
+              // ...
+          }
+        })
+    },
     createUserProfile ({ commit, getters }, payload) {
       commit('setLoading', true)
       const profile = {

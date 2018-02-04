@@ -38,9 +38,16 @@
                           </v-btn>
                           <v-btn
                             flat
+                            @click="setActiveProfile(profile.id)"
+                            >
+                            <v-icon color="success" left>cloud_download</v-icon>
+                            <span class="hidden-sm-and-down">Download</span>
+                          </v-btn>
+                          <v-btn
+                            flat
                             v-for="item in cardActions"
                             :key="item.title"
-                            :to="item.link + item.id">
+                            @click="item.link">
                             <v-icon :color="item.color" left>{{ item.icon }}</v-icon>
                             <span class="hidden-sm-and-down">{{ item.title }}</span>
                           </v-btn>
@@ -62,7 +69,6 @@
     data () {
       return {
         cardActions: [
-          {icon: 'cloud_download', title: 'Download', link: '#', color: 'success'},
           {icon: 'edit', title: 'Edit', link: '#', color: 'warning'},
           {icon: 'delete', title: 'Delete', link: '#', color: 'error'}
         ]
@@ -70,6 +76,7 @@
     },
     created () {
       this.$store.dispatch('loadUserProfiles')
+      // this.$store.dispatch('enablePersistence')
     },
     computed: {
       loading () {
@@ -77,6 +84,14 @@
       },
       profiles () {
         return this.$store.getters.getLoadedProfiles
+      }
+    },
+    methods: {
+      setActiveProfile (id) {
+        console.log('Download Selected')
+        const activeProfile = this.$store.getters.getProfileById(id)
+        this.$store.commit('setActiveProfile', activeProfile)
+        this.$router.push('/record/' + id)
       }
     }
   }

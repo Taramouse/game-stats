@@ -42,13 +42,20 @@ export default new Router({
       path: '/record',
       name: 'Record',
       component: Record,
-      beforeEnter: AuthGuard
+      props: true
+      // beforeEnter: AuthGuard
     },
     {
       path: '/profiles/:id',
       name: 'Preview Profile',
       props: true,
       component: PreviewProfile
+    },
+    {
+      path: '/record/:id',
+      name: 'Record Stats',
+      props: true,
+      component: Record
     },
     {
       path: '/new-profile',
