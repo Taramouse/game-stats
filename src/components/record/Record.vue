@@ -1,6 +1,8 @@
 <template>
+
   <v-layout justify-center align-center >
     <v-layout row wrap v-if="loading">
+        <!-- Profile -->
         <v-flex xs12 class="text-xs-center">
           <v-progress-circular
             indeterminate
@@ -25,7 +27,12 @@
                           <v-card-text
                             class="primary subheading"
                           >{{profile.description}}
-                        </v-card-text>
+                          </v-card-text>
+
+                          <v-card-actions>
+                            <v-spacer></v-spacer>
+                            <v-btn color="primary" @click="dialog = true" class="mb-2">Add New Item</v-btn>
+                          </v-card-actions>
                         </div>
                     </v-flex>
                   </v-layout>
@@ -73,7 +80,30 @@
               </v-card>
             </v-flex>
           </v-layout>
-  </v-layout>
+
+    <!-- Data Entry -->
+      <v-dialog v-model="dialog" persistent max-width="500px">
+        <v-card>
+          <v-card-title>
+            <span class="headline">Add New Record</span>
+          </v-card-title>
+          <v-card-text>
+            <v-container grid-list-md>
+              <v-layout wrap>
+                <v-flex xs12 sm6 md4 v-for="item in profile.items" :key="item.text">
+                  <v-text-field :label="item.text" v-model="data[item.value]"></v-text-field>
+                </v-flex>
+              </v-layout>
+            </v-container>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="error" flat @click.native="dialog = false">Close</v-btn>
+            <v-btn color="blue darken-1" flat @click.native="saveData">Save</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+</v-layout>
 </template>
 
 <script>
@@ -81,6 +111,7 @@
     props: ['id'],
     data () {
       return {
+        dialog: false,
         data: []
       }
     },
@@ -106,6 +137,12 @@
       },
       loading () {
         return this.$store.getters.loading
+      }
+    },
+    methods: {
+      saveData () {
+        this.dialog = false
+        // save the data
       }
     }
   }
