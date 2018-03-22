@@ -118,6 +118,9 @@ export default {
             commit('setLoading', false)
           }
         )
+    },
+    deleteUserProfile ({commit}) {
+      // Delete user selected profile.
     }
   },
   getters: {
