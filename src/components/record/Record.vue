@@ -31,7 +31,7 @@
 
                           <v-card-actions>
                             <v-spacer></v-spacer>
-                            <v-btn color="primary" @click="dialog = true" class="mb-2">Add New Item</v-btn>
+                            <v-btn color="primary" @click="dialog = true" class="mb-2">Add New Record</v-btn>
                           </v-card-actions>
                         </div>
                     </v-flex>
@@ -41,7 +41,7 @@
                       <v-card-text>
                         <v-data-table
                           :headers="profile.items"
-                          :items="data"
+                          :items="itemData"
                           hide-actions
                           disable-initial-sort
                           class="elevation-1"
@@ -49,11 +49,11 @@
                         >
                         </v-data-table>
                         <template slot="items" slot-scope="props">
-                          <td>{{ props.data.name }}</td>
+                          <td>{{ props.editedItemData.name }}</td>
                         </template>
                         <template slot="no-data">
                           <v-alert :value="true" color="info" icon="info" transition="scale-transition">
-                            No data displayed during preview.
+                            No data to display.
                           </v-alert>
                         </template>
                       </v-card-text>
@@ -91,14 +91,14 @@
             <v-container grid-list-md>
               <v-layout wrap>
                 <v-flex xs12 sm6 md4 v-for="item in profile.items" :key="item.text">
-                  <v-text-field :label="item.text" v-model="data[item.value]"></v-text-field>
+                  <v-text-field :label="item.text" v-model="editedItemData[item.value]"></v-text-field>
                 </v-flex>
               </v-layout>
             </v-container>
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="error" flat @click.native="dialog = false">Close</v-btn>
+            <v-btn color="error" flat @click.native="dialog = false">Cancel</v-btn>
             <v-btn color="blue darken-1" flat @click.native="saveData">Save</v-btn>
           </v-card-actions>
         </v-card>
@@ -112,7 +112,8 @@
     data () {
       return {
         dialog: false,
-        data: []
+        editedItemData: [{}],
+        itemData: [{}]
       }
     },
     computed: {
@@ -142,7 +143,17 @@
     methods: {
       saveData () {
         this.dialog = false
+        // this.itemData.push(this.editedItemData)
+        console.log(this.editedItemData)
+        const itemData = {
+          name: this.profileItems,
+          value: this.editedItemData
+        }
         // save the data
+        this.$store.commit('updateUserData', itemData)
+      },
+      getUserData () {
+        this.itemData = this.$store.getters.getProfieData
       }
     }
   }

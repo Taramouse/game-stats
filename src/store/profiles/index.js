@@ -19,7 +19,8 @@ export default {
       }
     ],
     activeProfile: [{}],
-    hasActiveProfile: false
+    hasActiveProfile: false,
+    profileData: [{}]
   },
   mutations: {
     setLoadedProfiles (state, profiles) {
@@ -28,6 +29,9 @@ export default {
     setActiveProfile (state, profile) {
       state.hasActiveProfile = true
       state.activeProfile = profile
+    },
+    createUserProfile (state, payload) {
+      state.loadedProfiles.push(payload)
     },
     updateProfileName (state, payload) {
       state.loadedProfiles.name = payload
@@ -46,30 +50,12 @@ export default {
     },
     // deleteTodo (state, { todo }) {
     //   state.todos.splice(state.todos.indexOf(todo), 1)
-    // },
-    createUserProfile (state, payload) {
-      state.loadedProfiles.push(payload)
+    // }
+    updateUserData (state, payload) {
+      state.profileData.push(payload)
     }
   },
   actions: {
-    // enablePersistence () {
-    //   firebase.database().ref('user-profiles').enablePersistence()
-    //     .then(() => {
-    //       // Initialize Cloud Firestore through firebase
-    //       // var db = firebase.firestore();
-    //     })
-    //     .catch((err) => {
-    //       if (err.code === 'failed-precondition') {
-    //           // Multiple tabs open, persistence can only be enabled
-    //           // in one tab at a a time.
-    //           // ...
-    //       } else if (err.code === 'unimplemented') {
-    //           // The current browser does not support all of the
-    //           // features required to enable persistence
-    //           // ...
-    //       }
-    //     })
-    // },
     createUserProfile ({ commit, getters }, payload) {
       commit('setLoading', true)
       const profile = {
@@ -137,6 +123,9 @@ export default {
     },
     hasActiveProfile (state) {
       return state.hasActiveProfile
+    },
+    getUserData (state) {
+      return state.profileData
     }
   }
 }

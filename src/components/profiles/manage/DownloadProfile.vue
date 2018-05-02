@@ -102,7 +102,7 @@
         // load the selected profile into ProfileEditor
       },
       deleteProfile (id) {
-        console.log('Delete Selected')
+        console.log('Delete profile id: ' + id + ' selected.')
         this.alertMessage = `Are you sure you want to delete this profile?
                             This action cannot be undone.
                             `
