@@ -1,5 +1,4 @@
 <template>
-
   <v-layout justify-center align-center >
     <v-layout row wrap v-if="loading">
         <!-- Profile -->
@@ -12,98 +11,46 @@
             v-if="loading">
           </v-progress-circular>
         </v-flex>
-      </v-layout>
-      <v-layout row>
-            <v-flex xs12>
-              <v-card>
-                <v-container fluid grid-list-sm>
-                  <v-layout row>
-                    <v-flex xs12 class="pa-0 ma-0">
-                        <div>
-                          <v-card-text
-                            class="primary display-3"
-                          >{{profile.name}}
-                          </v-card-text>
-                          <v-card-text
-                            class="primary subheading"
-                          >{{profile.description}}
-                          </v-card-text>
-
-                          <v-card-actions>
-                            <v-spacer></v-spacer>
-                            <v-btn color="primary" @click="dialog = true" class="mb-2">Add New Record</v-btn>
-                          </v-card-actions>
-                        </div>
-                    </v-flex>
-                  </v-layout>
-                  <v-layout row wrap class="hidden-sm-and-down">
-                    <v-flex xs12>
-                      <v-card-text>
-                        <v-data-table
-                          :headers="profile.items"
-                          :items="itemData"
-                          hide-actions
-                          disable-initial-sort
-                          class="elevation-1"
-                          dark
-                        >
-                        </v-data-table>
-                        <template slot="items" slot-scope="props">
-                          <td>{{ props.editedItemData.name }}</td>
-                        </template>
-                        <template slot="no-data">
-                          <v-alert :value="true" color="info" icon="info" transition="scale-transition">
-                            No data to display.
-                          </v-alert>
-                        </template>
-                      </v-card-text>
-                    </v-flex>
-                  </v-layout>
-                  <!-- Small Preview -->
-                  <v-layout row wrap class="hidden-md-and-up">
-                    <v-flex xs12>
-                      <v-card-text>
-                        <v-list>
-                          <v-list-tile v-for="item in profile.items" :key="item.text">
-                            <v-list-tile-content>{{item.text}}</v-list-tile-content>
-                            <v-list-tile-content class="align-end">
-
-                              Edit this bit
-
-                            </v-list-tile-content>
-                          </v-list-tile>
-                        </v-list>
-                      </v-card-text>
-                    </v-flex>
-                  </v-layout>
-                </v-container>
-              </v-card>
-            </v-flex>
-          </v-layout>
-
-    <!-- Data Entry -->
-      <v-dialog v-model="dialog" persistent max-width="500px">
-        <v-card>
-          <v-card-title>
-            <span class="headline">Add New Record</span>
-          </v-card-title>
-          <v-card-text>
-            <v-container grid-list-md>
-              <v-layout wrap>
-                <v-flex xs12 sm6 md4 v-for="item in profile.items" :key="item.text">
-                  <v-text-field :label="item.text" v-model="editedItemData[item.value]"></v-text-field>
+    </v-layout>
+    <v-layout row>
+      <v-flex xs12>
+          <v-card>
+            <v-container fluid grid-list-sm>
+              <v-layout row>
+                <v-flex xs12 class="pa-0 ma-0">
+                  <div>
+                    <v-card-text class="primary display-3">{{profile.name}}</v-card-text>
+                    <v-card-text class="primary subheading">{{profile.description}}</v-card-text>
+                  </div>
                 </v-flex>
               </v-layout>
+              <!-- Data Entry -->
+              <v-layout row>
+                <v-card>
+                  <v-card-title>
+                    <span class="headline">Add New Record</span>
+                  </v-card-title>
+                  <v-card-text>
+                    <v-container grid-list-md>
+                      <v-layout wrap>
+                        <v-flex xs12 sm6 md4 v-for="header in headers" :key="header.value">
+                          <v-text-field :label="header.text" v-model="editedItemData[header.value]"></v-text-field>
+                        </v-flex>
+                      </v-layout>
+                    </v-container>
+                  </v-card-text>
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="error" flat @click.native="clearData">Clear Form</v-btn>
+                    <v-btn color="blue darken-1" flat @click.native="saveData">Save</v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-layout>
             </v-container>
-          </v-card-text>
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn color="error" flat @click.native="dialog = false">Cancel</v-btn>
-            <v-btn color="blue darken-1" flat @click.native="saveData">Save</v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
-</v-layout>
+          </v-card>
+      </v-flex>
+    </v-layout>
+  </v-layout>
 </template>
 
 <script>
@@ -112,8 +59,8 @@
     data () {
       return {
         dialog: false,
-        editedItemData: [{}],
-        itemData: [{}]
+        editedItemData: {},
+        itemData: {}
       }
     },
     computed: {
@@ -126,6 +73,9 @@
           const profile = { id: '0', name: 'No Active Profile', description: 'Please download or create a new profile.', items: [] }
           return profile
         }
+      },
+      headers () {
+        return this.$store.getters.getHeaders
       },
       userIsAuthenticated () {
         return this.$store.getters.user !== null && this.$store.getters.user !== undefined
@@ -141,8 +91,10 @@
       }
     },
     methods: {
+      clearData () {
+        this.editedItemData = {}
+      },
       saveData () {
-        this.dialog = false
         // this.itemData.push(this.editedItemData)
         console.log(this.editedItemData)
         const itemData = {
@@ -151,9 +103,6 @@
         }
         // save the data
         this.$store.commit('updateUserData', itemData)
-      },
-      getUserData () {
-        this.itemData = this.$store.getters.getProfieData
       }
     }
   }
