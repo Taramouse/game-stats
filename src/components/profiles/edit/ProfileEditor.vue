@@ -45,12 +45,12 @@
                     required
                   ></v-text-field>
                   <draggable
-                    v-model="profileItems"
+                    v-model="profileHeaders"
                     @start="drag=true"
                     @end="drag=false"
                   ><transition-group>
-                    <div v-for="item in profileItems" :key="item.text">
-                      <v-chip close light @input="removeStat(item.text)">{{item.text}}</v-chip>
+                    <div v-for="header in profileHeaders" :key="header.text">
+                      <v-chip close light @input="removeStat(header.text)">{{header.text}}</v-chip>
                     </div>
                   </transition-group>
                 </draggable>
@@ -83,7 +83,7 @@
                   <v-flex xs12>
                     <v-card-text>
                       <v-data-table
-                        :headers="profileItems"
+                        :headers="profileHeaders"
                         :items="items"
                         hide-actions
                         disable-initial-sort
@@ -91,14 +91,8 @@
                         dark
                       >
                       </v-data-table>
-                      <template slot="items" slot-scope="props">
-                        <td>{{ props.item.name }}</td>
-                        <!-- <td class="text-xs-right">{{ props.item.date }}</td>
-                        <td class="text-xs-right">{{ props.item.fastest-lap }}</td>
-                        <td class="text-xs-right">{{ props.item.race-time }}</td>
-                        <td class="text-xs-right">{{ props.item.circuit }}</td>
-                        <td class="text-xs-right">{{ props.item.car-manufacturer }}</td>
-                        <td class="text-xs-right">{{ props.item.car-model }}</td> -->
+                      <template slot="headers" slot-scope="props">
+
                       </template>
                       <template slot="no-data">
                         <v-alert :value="true" color="info" icon="info" transition="scale-transition">
@@ -113,8 +107,8 @@
                   <v-flex xs12>
                     <v-card-text>
                       <v-list>
-                        <v-list-tile v-for="item in profileItems" :key="item.text">
-                          <v-list-tile-content>{{item.text}}</v-list-tile-content>
+                        <v-list-tile v-for="header in profileHeaders" :key="header.value">
+                          <v-list-tile-content>{{header.text}}</v-list-tile-content>
                           <v-list-tile-content class="align-end">Enter stat here</v-list-tile-content>
                         </v-list-tile>
                       </v-list>
@@ -144,7 +138,7 @@
                       name="name"
                       label="Name"
                       id="name"
-                      v-model="newItem"
+                      v-model="newHeader"
                       :rules="statRules"
                       :counter="3"
                       required>
@@ -182,12 +176,9 @@
       return {
         profileName: '',
         profileDescription: '',
-        profileItems: [],
-        newItem: '',
-        items: [
-          { value: false, name: 'Record 1', date: '23-01-18', 'fastest-lap': '1:30.673', 'race-time': '10:48.549', circuit: 'Spa francorchamps', 'car-manufacturer': 'Porche', 'car-model': '911 RSR 2014' },
-          { value: false, name: 'Record 2', date: '24-01-18', 'fastest-lap': '1:30.432', 'race-time': '10:28.338', circuit: 'Spa francorchamps', 'car-manufacturer': 'Porche', 'car-model': '911 RSR 2014' }
-        ],
+        profileHeaders: [],
+        newHeader: '',
+        items: [{}],
         editDialogue: false,
         valid: false,
         nameRules: [
@@ -201,7 +192,7 @@
         statRules: [
           (v) => !!v || 'Stat name is required',
           (v) => v.length >= 3 || 'Stat name must be at least 3 characters',
-          (v) => !this.profileItems.includes(v) || 'Stat names must be unique.'
+          (v) => !this.profileHeaders.includes(v) || 'Stat names must be unique.'
         ],
         preview: false
       }
@@ -216,30 +207,30 @@
     },
     methods: {
       addStat () {
-        console.log(this.newItem)
-        if (this.newItem.trim() === '') {
+        console.log(this.newHeader)
+        if (this.newHeader.trim() === '') {
           return
         }
         this.editDialogue = false
         // ToDo These names must be unique - need validation
-        const item = {
-          text: this.newItem,
-          value: this.newItem.toLowerCase()
+        const header = {
+          text: this.newHeader,
+          value: this.newHeader.toLowerCase()
           // ToDo replace spaces with - for value
         }
-        console.log(item)
-        this.profileItems.push(item)
+        console.log(header)
+        this.profileHeaders.push(header)
       },
-      removeStat (item) {
-        console.log(item)
-        this.profileItems.splice(this.profileItems.indexOf(item), 1)
-        this.profileItems = [...this.profileItems]
+      removeStat (header) {
+        console.log(header)
+        this.profileHeaders.splice(this.profileHeaders.indexOf(header), 1)
+        this.profileHeaders = [...this.profileHeaders]
       },
       createProfile () {
         const profileData = {
           name: this.profileName,
           description: this.profileDescription,
-          items: this.profileItems
+          headers: this.profileHeaders
         }
         this.$store.dispatch('createUserProfile', profileData)
       },

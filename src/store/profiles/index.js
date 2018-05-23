@@ -87,7 +87,7 @@ export default {
       const profile = {
         name: payload.name,
         description: payload.description,
-        headers: payload.items,
+        headers: payload.headers,
         date: new Date().toISOString(),
         creatorId: getters.user.id
       }
