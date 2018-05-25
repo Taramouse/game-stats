@@ -25,7 +25,7 @@
                 </v-flex>
               </v-layout>
               <!-- Data Entry -->
-              <v-layout row>
+              <v-layout row v-if="hasActiveProfile">
                 <v-card>
                   <v-card-title>
                     <span class="headline">Add New Record</span>
@@ -73,6 +73,9 @@
           const profile = { id: '0', name: 'No Active Profile', description: 'Please download or create a new profile.', items: [] }
           return profile
         }
+      },
+      hasActiveProfile () {
+        return this.$store.getters.hasActiveProfile
       },
       headers () {
         return this.$store.getters.getHeaders
