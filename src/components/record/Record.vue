@@ -1,17 +1,5 @@
 <template>
   <v-layout justify-center align-center >
-    <v-layout row wrap v-if="loading">
-        <!-- Profile -->
-        <v-flex xs12 class="text-xs-center">
-          <v-progress-circular
-            indeterminate
-            class="primary--text"
-            :width="7"
-            :size="70"
-            v-if="loading">
-          </v-progress-circular>
-        </v-flex>
-    </v-layout>
     <v-layout row>
       <v-flex xs12>
           <v-card>
