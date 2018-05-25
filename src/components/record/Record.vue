@@ -1,7 +1,7 @@
 <template>
   <v-layout justify-center align-center >
     <v-layout row>
-      <v-flex xs12>
+      <v-flex xs12 md8 offset-md2>
           <v-card>
             <v-container fluid grid-list-sm>
               <v-layout row>
