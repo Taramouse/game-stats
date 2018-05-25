@@ -8,18 +8,45 @@ export default {
         id: 1,
         name: 'Vuex is working!',
         description: 'Log fastest lap and race time for tracks and cars.',
-        items: [
-          { text: 'Date Recorded', value: 'date' },
-          { text: 'Fastest Lap', value: 'fastest-lap' },
-          { text: 'Race Time', value: 'race-time' },
+        headers: [
+          {
+            text: 'Date Recorded',
+            align: 'left',
+            sortable: true,
+            value: 'name'
+          },
+          { text: 'Laps', value: 'laps' },
           { text: 'Circuit', value: 'circuit' },
-          { text: 'Car Manufacturer', value: 'car-manufacturer' },
-          { text: 'Car Model', value: 'car-model' }
+          { text: 'Model', value: 'model' },
+          { text: 'Manufacturer', value: 'manufacturer' },
+          { text: 'Best Lap', value: 'bestlap' },
+          { text: 'Race Time', value: 'racetime' }
         ]
       }
     ],
-    activeProfile: [{}],
-    hasActiveProfile: false
+    items: [
+      {
+        name: '03/05/2018',
+        laps: 3,
+        circuit: 'Silverstone',
+        model: 'Vanquish',
+        manufacturer: 'Aston Martin',
+        bestlap: '1:25:23',
+        racetime: '4:25:26'
+      },
+      {
+        name: '04/05/2018',
+        laps: 5,
+        circuit: 'Le Manns',
+        model: 'Cobra',
+        manufacturer: 'AC',
+        bestlap: '3:02:04',
+        racetime: '15:25:26'
+      }
+    ],
+    activeProfile: {},
+    hasActiveProfile: false,
+    profileData: []
   },
   mutations: {
     setLoadedProfiles (state, profiles) {
@@ -28,6 +55,9 @@ export default {
     setActiveProfile (state, profile) {
       state.hasActiveProfile = true
       state.activeProfile = profile
+    },
+    createUserProfile (state, payload) {
+      state.loadedProfiles.push(payload)
     },
     updateProfileName (state, payload) {
       state.loadedProfiles.name = payload
@@ -46,36 +76,18 @@ export default {
     },
     // deleteTodo (state, { todo }) {
     //   state.todos.splice(state.todos.indexOf(todo), 1)
-    // },
-    createUserProfile (state, payload) {
-      state.loadedProfiles.push(payload)
+    // }
+    updateUserData (state, payload) {
+      state.profileData.push(payload)
     }
   },
   actions: {
-    // enablePersistence () {
-    //   firebase.database().ref('user-profiles').enablePersistence()
-    //     .then(() => {
-    //       // Initialize Cloud Firestore through firebase
-    //       // var db = firebase.firestore();
-    //     })
-    //     .catch((err) => {
-    //       if (err.code === 'failed-precondition') {
-    //           // Multiple tabs open, persistence can only be enabled
-    //           // in one tab at a a time.
-    //           // ...
-    //       } else if (err.code === 'unimplemented') {
-    //           // The current browser does not support all of the
-    //           // features required to enable persistence
-    //           // ...
-    //       }
-    //     })
-    // },
     createUserProfile ({ commit, getters }, payload) {
       commit('setLoading', true)
       const profile = {
         name: payload.name,
         description: payload.description,
-        items: payload.items,
+        headers: payload.headers,
         date: new Date().toISOString(),
         creatorId: getters.user.id
       }
@@ -104,7 +116,7 @@ export default {
               id: key,
               name: obj[key].name,
               description: obj[key].description,
-              items: obj[key].items,
+              headers: obj[key].headers,
               date: obj[key].date,
               creatorId: obj[key].creatorId
             })
@@ -118,6 +130,9 @@ export default {
             commit('setLoading', false)
           }
         )
+    },
+    deleteUserProfile ({commit}) {
+      // Delete user selected profile.
     }
   },
   getters: {
@@ -134,6 +149,12 @@ export default {
     },
     hasActiveProfile (state) {
       return state.hasActiveProfile
+    },
+    getHeaders (state) {
+      return state.activeProfile.headers
+    },
+    getUserData (state) {
+      return state.profileData
     }
   }
 }

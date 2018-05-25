@@ -33,7 +33,7 @@
                     <v-flex xs12>
                       <v-card-text>
                         <v-data-table
-                          :headers="profile.items"
+                          :headers="profile.headers"
                           :items="data"
                           hide-actions
                           disable-initial-sort
@@ -41,7 +41,7 @@
                           dark
                         >
                         </v-data-table>
-                        <template slot="items" slot-scope="props">
+                        <template slot="headers" slot-scope="props">
                           <td>{{ props.data.name }}</td>
                         </template>
                         <template slot="no-data">
@@ -57,9 +57,9 @@
                     <v-flex xs12>
                       <v-card-text>
                         <v-list>
-                          <v-list-tile v-for="item in profile.items" :key="item.text">
-                            <v-list-tile-content>{{item.text}}</v-list-tile-content>
-                            <v-list-tile-content class="align-end">Enter stat here</v-list-tile-content>
+                          <v-list-tile v-for="header in profile.headers" :key="header.value">
+                            <v-list-tile-content>{{header.text}}</v-list-tile-content>
+                            <v-list-tile-content class="align-end">No data displayed during preview</v-list-tile-content>
                           </v-list-tile>
                         </v-list>
                       </v-card-text>

@@ -7,7 +7,6 @@ import Signin from '@/components/user/Signin'
 import Record from '@/components/record/Record'
 import Stats from '@/components/stats/Stats'
 import NewProfile from '@/components/profiles/manage/NewProfile'
-import DeleteProfile from '@/components/profiles/manage/DeleteProfile'
 import DownloadProfile from '@/components/profiles/manage/DownloadProfile'
 import EditProfile from '@/components/profiles/manage/EditProfile'
 import ShareProfile from '@/components/profiles/manage/ShareProfile'
@@ -61,12 +60,6 @@ export default new Router({
       path: '/new-profile',
       name: 'NewProfile',
       component: NewProfile,
-      beforeEnter: AuthGuard
-    },
-    {
-      path: '/delete-profile',
-      name: 'DeleteProfile',
-      component: DeleteProfile,
       beforeEnter: AuthGuard
     },
     {

@@ -45,11 +45,17 @@
                           </v-btn>
                           <v-btn
                             flat
-                            v-for="item in cardActions"
-                            :key="item.title"
-                            @click="item.link">
-                            <v-icon :color="item.color" left>{{ item.icon }}</v-icon>
-                            <span class="hidden-sm-and-down">{{ item.title }}</span>
+                            @click="editProfile(profile.id)"
+                            >
+                            <v-icon color="warning" left>edit</v-icon>
+                            <span class="hidden-sm-and-down">Edit</span>
+                          </v-btn>
+                          <v-btn
+                            flat
+                            @click="deleteProfile(profile.id)"
+                            >
+                            <v-icon color="error" left>delete</v-icon>
+                            <span class="hidden-sm-and-down">Delete</span>
                           </v-btn>
                         </v-card-actions>
                       </v-flex>
@@ -68,10 +74,8 @@
   export default {
     data () {
       return {
-        cardActions: [
-          {icon: 'edit', title: 'Edit', link: '#', color: 'warning'},
-          {icon: 'delete', title: 'Delete', link: '#', color: 'error'}
-        ]
+        alertMessage: '',
+        showAlert: false
       }
     },
     created () {
@@ -92,6 +96,17 @@
         const activeProfile = this.$store.getters.getProfileById(id)
         this.$store.commit('setActiveProfile', activeProfile)
         this.$router.push('/record/' + id)
+      },
+      editProfile (id) {
+        console.log('Edit Selected')
+        // load the selected profile into ProfileEditor
+      },
+      deleteProfile (id) {
+        console.log('Delete profile id: ' + id + ' selected.')
+        this.alertMessage = `Are you sure you want to delete this profile?
+                            This action cannot be undone.
+                            `
+        this.showAlertDialogue = true
       }
     }
   }
