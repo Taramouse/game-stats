@@ -42,7 +42,14 @@
                   <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn color="error" flat @click.native="clearData">Clear Form</v-btn>
-                    <v-btn color="blue darken-1" flat @click.native="saveData">Save</v-btn>
+                    <v-btn
+                      color="blue darken-1"
+                      flat
+                      :disabled="loading"
+                      :loading="loading"
+                      @click.native="saveData"
+                      >Save
+                    </v-btn>
                   </v-card-actions>
                 </v-card>
               </v-layout>
@@ -104,7 +111,7 @@
           items: this.editedItemData
         }
         // save the data. Todo: Save data to cloud using store action.
-        this.$store.commit('updateUserData', itemData)
+        this.$store.dispatch('updateUserData', itemData)
       }
     }
   }

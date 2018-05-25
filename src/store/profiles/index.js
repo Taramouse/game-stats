@@ -133,6 +133,26 @@ export default {
     },
     deleteUserProfile ({commit}) {
       // Delete user selected profile.
+    },
+    updateUserData ({ commit, getters }, payload) {
+      commit('setLoading', true)
+      const userData = {
+        items: payload.items,
+        date: new Date().toISOString(),
+        creatorId: getters.user.id
+      }
+      firebase.database().ref('user-data').push(userData)
+        .then(() => {
+          commit('setLoading', false)
+          commit('updateUserData', {
+            ...userData
+          })
+        })
+        .catch((error) => {
+          commit('setLoading', false)
+          commit('setError', error)
+          console.log(error)
+        })
     }
   },
   getters: {
