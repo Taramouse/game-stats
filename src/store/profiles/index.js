@@ -46,7 +46,7 @@ export default {
     ],
     activeProfile: {},
     hasActiveProfile: false,
-    profileData: {}
+    profileData: []
   },
   mutations: {
     setLoadedProfiles (state, profiles) {
