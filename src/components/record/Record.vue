@@ -1,5 +1,5 @@
 <template>
-  <v-layout justify-center align-center >
+  <v-container fluid class="pa-0">
     <v-layout row>
       <v-flex xs12 md8 offset-md2>
           <v-card>
@@ -45,7 +45,7 @@
           </v-card>
       </v-flex>
     </v-layout>
-  </v-layout>
+  </v-container>
 </template>
 
 <script>
