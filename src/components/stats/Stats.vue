@@ -34,7 +34,7 @@
                       <v-card-text>
                         <v-data-table
                           :headers="profile.headers"
-                          :items="data"
+                          :items="items"
                           hide-actions
                           disable-initial-sort
                           class="elevation-1"
@@ -56,16 +56,13 @@
                   <v-layout row wrap class="hidden-md-and-up">
                     <v-flex xs12>
                       <v-card-text>
-                        <v-list>
-                          <v-list-tile v-for="header in profile.headers" :key="header.value">
-                            <v-list-tile-content>{{header.text}}</v-list-tile-content>
-                            <v-list-tile-content class="align-end">
-
-                              Edit this bit
-
-                            </v-list-tile-content>
-                          </v-list-tile>
-                        </v-list>
+                        <v-card class="mb-2" v-for="item in items" :key="item.id">
+                          <v-card-text>
+                            <ul id="list">
+                              <li v-for="(key, value) in item.item" :key="key">{{ value }} : {{   key }}</li>
+                            </ul>
+                          </v-card-text>
+                        </v-card>
                       </v-card-text>
                     </v-flex>
                   </v-layout>
@@ -94,6 +91,9 @@
           const profile = { id: '0', name: 'No Active Profile', description: 'Please download or create a new profile.', items: [] }
           return profile
         }
+      },
+      items () {
+        return this.$store.getters.getUserData
       },
       userIsAuthenticated () {
         return this.$store.getters.user !== null && this.$store.getters.user !== undefined
