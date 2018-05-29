@@ -136,12 +136,12 @@ export default {
     },
     updateUserData ({ commit, getters }, payload) {
       commit('setLoading', true)
+      const creatorId = getters.user.id
+      const key = getters.getActiveProfile.id
       const userData = {
-        items: payload.items,
-        date: new Date().toISOString(),
-        creatorId: getters.user.id
+        item: payload.item
       }
-      firebase.database().ref('user-data').push(userData)
+      firebase.database().ref('user-data').child(creatorId).child(key).push(userData)
         .then(() => {
           commit('setLoading', false)
           commit('updateUserData', {

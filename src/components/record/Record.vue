@@ -96,7 +96,7 @@
         // this.itemData.push(this.editedItemData)
         console.log(this.editedItemData)
         const itemData = {
-          items: this.editedItemData
+          item: this.editedItemData
         }
         // save the data. Todo: Save data to cloud using store action.
         this.$store.dispatch('updateUserData', itemData)
