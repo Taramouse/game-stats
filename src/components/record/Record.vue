@@ -1,19 +1,7 @@
 <template>
-  <v-layout justify-center align-center >
-    <v-layout row wrap v-if="loading">
-        <!-- Profile -->
-        <v-flex xs12 class="text-xs-center">
-          <v-progress-circular
-            indeterminate
-            class="primary--text"
-            :width="7"
-            :size="70"
-            v-if="loading">
-          </v-progress-circular>
-        </v-flex>
-    </v-layout>
+  <v-container fluid class="pa-0">
     <v-layout row>
-      <v-flex xs12>
+      <v-flex xs12 md8 offset-md2>
           <v-card>
             <v-container fluid grid-list-sm>
               <v-layout row>
@@ -42,7 +30,14 @@
                   <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn color="error" flat @click.native="clearData">Clear Form</v-btn>
-                    <v-btn color="blue darken-1" flat @click.native="saveData">Save</v-btn>
+                    <v-btn
+                      color="blue darken-1"
+                      flat
+                      :disabled="loading"
+                      :loading="loading"
+                      @click.native="saveData"
+                      >Save
+                    </v-btn>
                   </v-card-actions>
                 </v-card>
               </v-layout>
@@ -50,7 +45,7 @@
           </v-card>
       </v-flex>
     </v-layout>
-  </v-layout>
+  </v-container>
 </template>
 
 <script>
@@ -101,10 +96,10 @@
         // this.itemData.push(this.editedItemData)
         console.log(this.editedItemData)
         const itemData = {
-          items: this.editedItemData
+          item: this.editedItemData
         }
         // save the data. Todo: Save data to cloud using store action.
-        this.$store.commit('updateUserData', itemData)
+        this.$store.dispatch('createUserData', itemData)
       }
     }
   }
