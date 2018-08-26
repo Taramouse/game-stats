@@ -77,7 +77,7 @@ export default {
     // deleteTodo (state, { todo }) {
     //   state.todos.splice(state.todos.indexOf(todo), 1)
     // }
-    updateUserData (state, payload) {
+    createUserData (state, payload) {
       state.profileData.push(payload)
     }
   },
@@ -134,7 +134,7 @@ export default {
     deleteUserProfile ({commit}) {
       // Delete user selected profile.
     },
-    updateUserData ({ commit, getters }, payload) {
+    createUserData ({ commit, getters }, payload) {
       commit('setLoading', true)
       const creatorId = getters.user.id
       const key = getters.getActiveProfile.id
@@ -144,7 +144,7 @@ export default {
       firebase.database().ref('user-data').child(creatorId).child(key).push(userData)
         .then(() => {
           commit('setLoading', false)
-          commit('updateUserData', {
+          commit('createUserData', {
             ...userData
           })
         })

@@ -99,7 +99,7 @@
           item: this.editedItemData
         }
         // save the data. Todo: Save data to cloud using store action.
-        this.$store.dispatch('updateUserData', itemData)
+        this.$store.dispatch('createUserData', itemData)
       }
     }
   }
