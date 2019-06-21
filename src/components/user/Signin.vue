@@ -13,26 +13,12 @@
               <form @submit.prevent="onSignin">
                 <v-layout row>
                   <v-flex xs12>
-                    <v-text-field
-                      name="email"
-                      label="Mail"
-                      id="email"
-                      v-model="email"
-                      type="email"
-                      autocomplete="current-email"
-                      required></v-text-field>
+                    <v-text-field name="email" label="Mail" id="email" v-model="email" type="email" autocomplete="current-email" required></v-text-field>
                   </v-flex>
                 </v-layout>
                 <v-layout row>
                   <v-flex xs12>
-                    <v-text-field
-                      name="password"
-                      label="Password"
-                      id="password"
-                      v-model="password"
-                      type="password"
-                      autocomplete="current-password"
-                      required></v-text-field>
+                    <v-text-field name="password" label="Password" id="password" v-model="password" type="password" autocomplete="current-password" required></v-text-field>
                   </v-flex>
                 </v-layout>
                 <v-layout row>
@@ -62,44 +48,44 @@
 </template>
 
 <script>
-  export default {
-    data () {
-      return {
-        email: '',
-        password: ''
-      }
+export default {
+  data () {
+    return {
+      email: '',
+      password: ''
+    }
+  },
+  computed: {
+    user () {
+      return this.$store.getters.user
     },
-    computed: {
-      user () {
-        return this.$store.getters.user
-      },
-      error () {
-        return this.$store.getters.error
-      },
-      loading () {
-        return this.$store.getters.loading
-      }
+    error () {
+      return this.$store.getters.error
     },
-    watch: {
-      user (value) {
-        if (value !== null && value !== undefined) {
-          this.$router.push('/')
-        }
-      }
-    },
-    methods: {
-      onSignin () {
-        this.$store.dispatch('signUserIn', {email: this.email, password: this.password})
-      },
-      onSignInTwitter () {
-        this.$store.dispatch('signUserInTwitter')
-      },
-      onSignInGoogle () {
-        this.$store.dispatch('signUserInGoogle')
-      },
-      onDismissed () {
-        this.$store.dispatch('clearError')
+    loading () {
+      return this.$store.getters.loading
+    }
+  },
+  watch: {
+    user (value) {
+      if (value !== null && value !== undefined) {
+        this.$router.push('/')
       }
     }
+  },
+  methods: {
+    onSignin () {
+      this.$store.dispatch('signUserIn', { email: this.email, password: this.password })
+    },
+    onSignInTwitter () {
+      this.$store.dispatch('signUserInTwitter')
+    },
+    onSignInGoogle () {
+      this.$store.dispatch('signUserInGoogle')
+    },
+    onDismissed () {
+      this.$store.dispatch('clearError')
+    }
   }
+}
 </script>

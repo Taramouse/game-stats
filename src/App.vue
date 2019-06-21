@@ -1,18 +1,10 @@
 <template>
   <v-app dark>
     <!-- Nav Drawer -->
-    <v-navigation-drawer
-      temporary
-      fixed
-      v-model="sideNav"
-      app>
+    <v-navigation-drawer temporary fixed v-model="sideNav" app>
       <v-list>
         <v-subheader v-if="userIsAuthenticated">Stats</v-subheader>
-        <v-list-tile
-          v-for="item in menuItems"
-          :key="item.title"
-          :to="item.link"
-          exact>
+        <v-list-tile v-for="item in menuItems" :key="item.title" :to="item.link" exact>
           <v-list-tile-action>
             <v-icon :color="item.color">{{ item.icon }}</v-icon>
           </v-list-tile-action>
@@ -21,12 +13,7 @@
           </v-list-tile-content>
         </v-list-tile>
         <v-subheader v-if="userIsAuthenticated">Manage Profiles</v-subheader>
-        <v-list-tile
-          v-if="userIsAuthenticated"
-          v-for="item in profileMenuItems"
-          :key="item.title"
-          :to="item.link"
-          exact>
+        <v-list-tile v-if="userIsAuthenticated" v-for="item in profileMenuItems" :key="item.title" :to="item.link" exact>
           <v-list-tile-action>
             <v-icon :color="item.color">{{ item.icon }}</v-icon>
           </v-list-tile-action>
@@ -44,20 +31,12 @@
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items>
-        <v-btn
-          flat
-          class="hidden-sm-and-down"
-          v-for="item in menuItems"
-          :key="item.title"
-          :to="item.link">
+        <v-btn flat class="hidden-sm-and-down" v-for="item in menuItems" :key="item.title" :to="item.link">
           <v-icon :color="item.color" left>{{ item.icon }}</v-icon>
           {{ item.title }}
         </v-btn>
         <v-menu v-if="userIsAuthenticated" transition="slide-y-transition" offset-y>
-          <v-btn
-            flat
-            class="hidden-sm-and-down"
-            slot="activator">
+          <v-btn flat class="hidden-sm-and-down" slot="activator">
             <v-icon class="primary--text" left dark>build</v-icon>
             Manage Profiles
           </v-btn>
@@ -70,10 +49,7 @@
             </v-list-tile>
           </v-list>
         </v-menu>
-        <v-btn
-          v-if="userIsAuthenticated"
-          flat
-          @click="onLogout">
+        <v-btn v-if="userIsAuthenticated" flat @click="onLogout">
           <v-icon class="primary--text" left dark>exit_to_app</v-icon>
           Logout
         </v-btn>
@@ -85,7 +61,7 @@
         <v-slide-y-transition mode="out-in">
           <router-view></router-view>
         </v-slide-y-transition>
-       </v-container>
+      </v-container>
     </v-content>
     <!-- Footer -->
     <v-footer fixed app>
@@ -95,43 +71,43 @@
 </template>
 
 <script>
-  export default {
-    data () {
-      return {
-        sideNav: false,
-        profileMenuItems: [
-          {icon: 'add', title: 'New Profile', link: '/new-profile', color: 'info'},
-          {icon: 'cloud_download', title: 'Download Profile', link: '/download-profile', color: 'success'},
-          {icon: 'edit', title: 'Edit Profile', link: '/edit-profile', color: 'warning'},
-          {icon: 'share', title: 'Share Profile', link: '/share-profile', color: 'info'},
-          {icon: 'delete', title: 'Delete Profile', link: '/delete-profile', color: 'error'}
+export default {
+  data () {
+    return {
+      sideNav: false,
+      profileMenuItems: [
+        { icon: 'add', title: 'New Profile', link: '/new-profile', color: 'info' },
+        { icon: 'cloud_download', title: 'Download Profile', link: '/download-profile', color: 'success' },
+        { icon: 'edit', title: 'Edit Profile', link: '/edit-profile', color: 'warning' },
+        { icon: 'share', title: 'Share Profile', link: '/share-profile', color: 'info' },
+        { icon: 'delete', title: 'Delete Profile', link: '/delete-profile', color: 'error' }
+      ]
+    }
+  },
+  computed: {
+    menuItems () {
+      let menuItems = [
+        { icon: 'face', title: 'Sign up', link: '/signup', color: 'info' },
+        { icon: 'lock_open', title: 'Sign in', link: '/signin', color: 'info' }
+      ]
+      if (this.userIsAuthenticated) {
+        menuItems = [
+          { icon: 'fiber_manual_record', title: 'Record Stats', link: '/record', color: 'error' },
+          { icon: 'remove_red_eye', title: 'View Stats', link: '/stats', color: 'info' }
         ]
       }
+      return menuItems
     },
-    computed: {
-      menuItems () {
-        let menuItems = [
-          {icon: 'face', title: 'Sign up', link: '/signup', color: 'info'},
-          {icon: 'lock_open', title: 'Sign in', link: '/signin', color: 'info'}
-        ]
-        if (this.userIsAuthenticated) {
-          menuItems = [
-            {icon: 'fiber_manual_record', title: 'Record Stats', link: '/record', color: 'error'},
-            {icon: 'remove_red_eye', title: 'View Stats', link: '/stats', color: 'info'}
-          ]
-        }
-        return menuItems
-      },
-      userIsAuthenticated () {
-        return this.$store.getters.user !== null && this.$store.getters.user !== undefined
-      }
-    },
-    methods: {
-      onLogout () {
-        this.$store.dispatch('logout')
-      }
+    userIsAuthenticated () {
+      return this.$store.getters.user !== null && this.$store.getters.user !== undefined
+    }
+  },
+  methods: {
+    onLogout () {
+      this.$store.dispatch('logout')
     }
   }
+}
 </script>
 
 <<style scoped>
