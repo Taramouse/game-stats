@@ -22,17 +22,17 @@
         <v-layout row wrap class="hidden-sm-and-down">
           <v-flex xs12>
             <v-card-text>
-              <table>
+              <table class="data-table">
                 <thead>
                   <tr>
-                    <th v-for="column in columns" :key="column.value">{{column.label}}</th>
+                    <th v-for="column in columns" :key="column.value">{{column.text}}</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr v-for="item in items" :key="item.name">
                     <td v-for="column in columns" :key="column.value">
-                      <!-- <span>{{column.label}}</span> -->
-                      <span>{{item[column.value]}}</span>
+                      <!-- <span>{{column.value}}</span> -->
+                      <span>{{item.item[column.value]}}</span>
                     </td>
                   </tr>
                 </tbody>
@@ -107,6 +107,9 @@ export default {
     items () {
       return this.$store.getters.getUserData
     },
+    columns () {
+      return this.$store.getters.getHeaders
+    },
     userIsAuthenticated () {
       return (
         this.$store.getters.user !== null &&
@@ -125,3 +128,16 @@ export default {
   }
 }
 </script>
+<style scoped>
+.data-table {
+  border-collapse: collapse;
+}
+
+.data-table,
+th,
+td {
+  border: 1px solid whitesmoke;
+  padding: 10px;
+}
+</style>
+
